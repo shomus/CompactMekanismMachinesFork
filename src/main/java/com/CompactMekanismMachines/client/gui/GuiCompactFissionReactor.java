@@ -1,5 +1,6 @@
 package com.CompactMekanismMachines.client.gui;
 
+import com.CompactMekanismMachines.common.tile.TileEntityCompactFissionReactor;
 import mekanism.client.gui.GuiMekanismTile;
 import mekanism.client.gui.element.bar.GuiVerticalPowerBar;
 import mekanism.client.gui.element.gauge.GaugeType;
@@ -17,9 +18,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class GuiCompactFissionReactor extends GuiMekanismTile<TileEntityGasGenerator, MekanismTileContainer<TileEntityGasGenerator>> {
+public class GuiCompactFissionReactor extends GuiMekanismTile<TileEntityCompactFissionReactor, MekanismTileContainer<TileEntityCompactFissionReactor>> {
 
-    public GuiCompactFissionReactor(MekanismTileContainer<TileEntityGasGenerator> container, Inventory inv, Component title) {
+    public GuiCompactFissionReactor(MekanismTileContainer<TileEntityCompactFissionReactor> container, Inventory inv, Component title) {
         super(container, inv, title);
         dynamicSlots = true;
     }

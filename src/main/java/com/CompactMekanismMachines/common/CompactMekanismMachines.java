@@ -31,7 +31,8 @@ import net.minecraftforge.registries.RegistryObject;
 import org.slf4j.Logger;
 @Mod(CompactMekanismMachines.MODID)
 public class CompactMekanismMachines {
-    public static final String MODID = "CompactMekanismMachines";
+
+    public static final String MODID = "compactmekanismmachines";
     // Define mod id in a common place for everything to reference
     // Directly reference a slf4j logger
     private static final Logger LOGGER = LogUtils.getLogger();

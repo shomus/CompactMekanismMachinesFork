@@ -1,5 +1,6 @@
 package com.CompactMekanismMachines.common.registries;
 
+import com.CompactMekanismMachines.common.tile.TileEntityCompactFissionReactor;
 import mekanism.api.Upgrade;
 import mekanism.api.math.FloatingLong;
 import mekanism.common.block.attribute.AttributeCustomSelectionBox;
@@ -16,9 +17,9 @@ import mekanism.generators.common.tile.TileEntityGasGenerator;
 import java.util.EnumSet;
 
 public class CompactBlockTypes {
-    public static final Generator<TileEntityGasGenerator> GAS_BURNING_GENERATOR = Generator.GeneratorBuilder
-            .createGenerator(() -> GeneratorsTileEntityTypes.GAS_BURNING_GENERATOR, GeneratorsLang.DESCRIPTION_GAS_BURNING_GENERATOR)
-            .withGui(() -> GeneratorsContainerTypes.GAS_BURNING_GENERATOR)
+    public static final Generator<TileEntityCompactFissionReactor> COMPACT_FISSION_REACTOR = Generator.GeneratorBuilder
+            .createGenerator(() -> CompactTileEntityTypes.COMPACT_FISSION_REACTOR, GeneratorsLang.DESCRIPTION_GAS_BURNING_GENERATOR)
+            .withGui(() -> CompactContainerTypes.COMPACT_FISSION_REACTOR)
             .withEnergyConfig(()-> FloatingLong.parseFloatingLong("1000"))
             .withCustomShape(BlockShapes.GAS_BURNING_GENERATOR)
             .with(AttributeCustomSelectionBox.JSON)

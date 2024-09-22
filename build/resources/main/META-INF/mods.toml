@@ -15,7 +15,7 @@ license="All Rights Reserved"
 # A list of mods - how many allowed here is determined by the individual mod loader
 [[mods]] #mandatory
 # The modid of the mod
-modId="examplemod" #mandatory
+modId="compactmekanismmachines" #mandatory
 # The version number of the mod
 version="1.0.0" #mandatory
 # A display name for the mod
@@ -42,7 +42,7 @@ authors="YourNameHere, OtherNameHere" #optional
 description='''Example mod description.
 Newline characters can be used and will be replaced properly.'''
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
-[[dependencies.examplemod]] #optional
+[[dependencies.compactmekanismmachines]] #optional
     # the modid of the dependency
     modId="forge" #mandatory
     # Does this dependency have to exist - if not, ordering below must be specified
@@ -56,7 +56,7 @@ Newline characters can be used and will be replaced properly.'''
     # Side this dependency is applied on - BOTH, CLIENT, or SERVER
     side="BOTH"
 # Here's another dependency
-[[dependencies.examplemod]]
+[[dependencies.compactmekanismmachines]]
     modId="minecraft"
     mandatory=true
     # This version range declares a minimum of the current minecraft version up to but not including the next major version
@@ -67,5 +67,5 @@ Newline characters can be used and will be replaced properly.'''
 # Features are specific properties of the game environment, that you may want to declare you require. This example declares
 # that your mod requires GL version 3.2 or higher. Other features will be added. They are side aware so declaring this won't
 # stop your mod loading on the server for example.
-#[features.examplemod]
+#[features.compactmekanismmachines]
 #openGLVersion="[3.2,)"

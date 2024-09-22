@@ -3,7 +3,9 @@
 
 # Log file
 *.log
-
+run-data/*
+run/*
+.gradle/*
 # BlueJ files
 *.ctxt
 
