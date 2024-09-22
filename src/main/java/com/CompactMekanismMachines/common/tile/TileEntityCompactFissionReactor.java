@@ -31,12 +31,12 @@ import mekanism.common.tile.base.SubstanceType;
 
 import mekanism.generators.common.config.MekanismGeneratorsConfig;
 import mekanism.generators.common.registries.GeneratorsBlocks;
-import mekanism.generators.common.tile.TileEntityGenerator;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import com.CompactMekanismMachines.common.registries.CompactBlocks;
+import com.CompactMekanismMachines.common.tile.TileEntityGenerator;
 
 public class TileEntityCompactFissionReactor extends TileEntityGenerator {
 
