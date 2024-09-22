@@ -26,18 +26,21 @@ import mekanism.common.inventory.container.sync.SyncableFloatingLong;
 import mekanism.common.inventory.container.sync.SyncableInt;
 import mekanism.common.inventory.slot.EnergyInventorySlot;
 import mekanism.common.inventory.slot.chemical.GasInventorySlot;
+import mekanism.common.registries.MekanismGases;
 import mekanism.common.util.MekanismUtils;
 import mekanism.common.tile.base.SubstanceType;
 
+import mekanism.common.ChemicalConstants;
 import mekanism.generators.common.config.MekanismGeneratorsConfig;
 import mekanism.generators.common.registries.GeneratorsBlocks;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import com.CompactMekanismMachines.common.registries.CompactBlocks;
 import com.CompactMekanismMachines.common.tile.TileEntityGenerator;
-
+import com.CompactMekanismMachines.common.config.CompactMekanismMachinesConfig;
 public class TileEntityCompactFissionReactor extends TileEntityGenerator {
 
     /**
@@ -167,7 +170,7 @@ public class TileEntityCompactFissionReactor extends TileEntityGenerator {
 
     //Methods relating to IComputerTile
     @Override
-    public FloatingLong getProductionRate() {
+    FloatingLong getProductionRate() {
         return getGenerationRate().multiply(getUsed()).multiply(getMaxBurnTicks());
     }
     //End methods IComputerTile
@@ -176,8 +179,8 @@ public class TileEntityCompactFissionReactor extends TileEntityGenerator {
     private class FuelTank extends VariableCapacityGasTank {
 
         protected FuelTank(@Nullable IContentsListener listener) {
-            super(MekanismGeneratorsConfig.generators.gbgTankCapacity, ChemicalTankBuilder.GAS.notExternal, ChemicalTankBuilder.GAS.alwaysTrueBi,
-                    gas -> gas.has(GasAttributes.Fuel.class), null, listener);
+            super(CompactMekanismMachinesConfig.machines.cfrTankCapacity, ChemicalTankBuilder.GAS.notExternal, ChemicalTankBuilder.GAS.alwaysTrueBi,
+                    gas -> gas.equals(MekanismGases.FISSILE_FUEL.getChemical()), null, listener);
         }
 
         @Override
