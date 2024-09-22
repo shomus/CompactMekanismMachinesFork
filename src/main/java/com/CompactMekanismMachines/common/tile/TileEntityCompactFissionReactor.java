@@ -30,7 +30,7 @@ import mekanism.common.util.MekanismUtils;
 import mekanism.common.tile.base.SubstanceType;
 
 import mekanism.generators.common.config.MekanismGeneratorsConfig;
-import mekanism.generators.common.tile.TileEntityGasGenerator;
+import mekanism.generators.common.registries.GeneratorsBlocks;
 import mekanism.generators.common.tile.TileEntityGenerator;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
@@ -39,6 +39,7 @@ import org.jetbrains.annotations.Nullable;
 import com.CompactMekanismMachines.common.registries.CompactBlocks;
 
 public class TileEntityCompactFissionReactor extends TileEntityGenerator {
+
     /**
      * The tank this block is storing fuel in.
      */
@@ -163,6 +164,7 @@ public class TileEntityCompactFissionReactor extends TileEntityGenerator {
         container.track(SyncableDouble.create(this::getUsed, value -> gasUsedLastTick = value));
         container.track(SyncableInt.create(this::getMaxBurnTicks, value -> maxBurnTicks = value));
     }
+
     //Methods relating to IComputerTile
     @Override
     public FloatingLong getProductionRate() {
