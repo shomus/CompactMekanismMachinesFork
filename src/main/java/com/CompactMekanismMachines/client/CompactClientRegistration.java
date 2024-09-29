@@ -5,6 +5,8 @@ import com.CompactMekanismMachines.common.CompactMekanismMachines;
 import com.CompactMekanismMachines.common.registries.CompactContainerTypes;
 import com.CompactMekanismMachines.common.registries.CompactTileEntityTypes;
 import mekanism.client.ClientRegistrationUtil;
+import mekanism.client.gui.robit.GuiRobitRepair;
+import mekanism.common.registries.MekanismContainerTypes;
 import mekanism.generators.client.gui.GuiGasGenerator;
 import mekanism.generators.common.MekanismGenerators;
 import mekanism.generators.common.registries.GeneratorsContainerTypes;
@@ -20,6 +22,7 @@ import net.minecraftforge.registries.RegisterEvent;
 public class CompactClientRegistration {
     private CompactClientRegistration(){}
 
+    public String abc = CompactContainerTypes.COMPACT_FISSION_REACTOR.get().toString();
     @SubscribeEvent(priority = EventPriority.LOW)
     public static void registerContainers(RegisterEvent event) {
         event.register(Registries.MENU, helper -> {

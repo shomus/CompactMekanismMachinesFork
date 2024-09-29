@@ -10,6 +10,8 @@ import mekanism.generators.common.registries.GeneratorsBlocks;
 import mekanism.generators.common.registries.GeneratorsContainerTypes;
 import com.CompactMekanismMachines.common.registries.CompactBlockTypes;
 import mekanism.generators.common.tile.TileEntityGasGenerator;
+import org.checkerframework.checker.units.qual.C;
+import org.spongepowered.asm.mixin.Mixin;
 
 public class CompactContainerTypes {
     private CompactContainerTypes(){

@@ -1,21 +1,24 @@
 package com.CompactMekanismMachines.common.tile;
 
+import com.CompactMekanismMachines.common.config.CompactMekanismMachinesConfig;
+import com.CompactMekanismMachines.common.registries.CompactBlocks;
 import mekanism.api.Action;
 import mekanism.api.AutomationType;
 import mekanism.api.IContentsListener;
 import mekanism.api.RelativeSide;
+import mekanism.api.chemical.ChemicalTankBuilder;
 import mekanism.api.chemical.attribute.ChemicalAttributeValidator;
+import mekanism.api.chemical.gas.Gas;
+import mekanism.api.chemical.gas.GasStack;
+import mekanism.api.chemical.gas.IGasTank;
 import mekanism.api.chemical.gas.attribute.GasAttributes;
 import mekanism.api.functions.ConstantPredicates;
 import mekanism.api.heat.HeatAPI;
 import mekanism.api.math.FloatingLong;
-import mekanism.api.chemical.ChemicalTankBuilder;
-import mekanism.api.chemical.gas.Gas;
-import mekanism.api.chemical.gas.GasStack;
-import mekanism.api.chemical.gas.IGasTank;
-import mekanism.api.chemical.gas.attribute.GasAttributes.CooledCoolant;
+import mekanism.api.math.FloatingLongSupplier;
 import mekanism.api.math.MathUtils;
-import mekanism.common.capabilities.chemical.variable.VariableCapacityChemicalTankBuilder.VariableCapacityGasTank;
+import mekanism.api.providers.IBlockProvider;
+import mekanism.common.capabilities.chemical.variable.VariableCapacityChemicalTankBuilder;
 import mekanism.common.capabilities.fluid.VariableCapacityFluidTank;
 import mekanism.common.capabilities.heat.CachedAmbientTemperature;
 import mekanism.common.capabilities.heat.VariableHeatCapacitor;
@@ -25,6 +28,9 @@ import mekanism.common.capabilities.holder.fluid.FluidTankHelper;
 import mekanism.common.capabilities.holder.fluid.IFluidTankHolder;
 import mekanism.common.capabilities.holder.heat.HeatCapacitorHelper;
 import mekanism.common.capabilities.holder.heat.IHeatCapacitorHolder;
+import mekanism.common.capabilities.holder.slot.IInventorySlotHolder;
+import mekanism.common.capabilities.holder.slot.InventorySlotHelper;
+import mekanism.common.config.MekanismConfig;
 import mekanism.common.integration.computer.SpecialComputerMethodWrapper;
 import mekanism.common.integration.computer.annotation.ComputerMethod;
 import mekanism.common.integration.computer.annotation.WrappingComputerMethod;
@@ -34,31 +40,19 @@ import mekanism.common.inventory.container.sync.SyncableFloatingLong;
 import mekanism.common.inventory.container.sync.SyncableInt;
 import mekanism.common.inventory.slot.EnergyInventorySlot;
 import mekanism.common.inventory.slot.chemical.GasInventorySlot;
-import mekanism.common.lib.transmitter.TransmissionType;
 import mekanism.common.registries.MekanismGases;
-import mekanism.common.tile.component.TileComponentConfig;
-import mekanism.common.tile.component.TileComponentEjector;
-import mekanism.common.tile.component.config.ConfigInfo;
-import mekanism.common.tile.component.config.DataType;
-import mekanism.common.tile.component.config.slot.ChemicalSlotInfo;
-import mekanism.common.tile.component.config.slot.FluidSlotInfo;
-import mekanism.common.tile.prefab.TileEntityConfigurableMachine;
+import mekanism.common.tile.base.SubstanceType;
 import mekanism.common.util.HeatUtils;
 import mekanism.common.util.MekanismUtils;
-import mekanism.common.tile.base.SubstanceType;
-
 import mekanism.generators.common.config.MekanismGeneratorsConfig;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.fluids.FluidStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import com.CompactMekanismMachines.common.registries.CompactBlocks;
-import com.CompactMekanismMachines.common.config.CompactMekanismMachinesConfig;
 
-public class TileEntityCompactFissionReactor extends TileEntityConfigurableMachine {
+public class TileEntityCompactTurbine extends TileEntityGenerator  {
 
     /**
      * The tank this block is storing fuel in.
@@ -85,47 +79,39 @@ public class TileEntityCompactFissionReactor extends TileEntityConfigurableMachi
     @WrappingComputerMethod(wrapper = SpecialComputerMethodWrapper.ComputerIInventorySlotWrapper.class, methodNames = "getEnergyItem", docPlaceholder = "energy item slot")
     EnergyInventorySlot energySlot;
 
-    public TileEntityCompactFissionReactor(BlockPos pos, BlockState state) {
-        super(CompactBlocks.COMPACT_FISSION_REACTOR, pos, state);
+    public TileEntityCompactTurbine(BlockPos pos, BlockState state) {
+        super(CompactBlocks.COMPACT_FISSION_REACTOR, pos, state, MekanismConfig.general.FROM_H2);
         biomeAmbientTemp = HeatAPI.getAmbientTemp(this.getLevel(), this.getTilePos());
-        configComponent = new TileComponentConfig(this, TransmissionType.GAS,TransmissionType.FLUID);
+    }
 
-        ConfigInfo gasConfig = configComponent.getConfig(TransmissionType.GAS);
-        if (gasConfig !=null){
-            gasConfig.addSlotInfo(DataType.INPUT_1, new ChemicalSlotInfo.GasSlotInfo(true,false,fuelTank));
-            gasConfig.addSlotInfo(DataType.INPUT_2, new ChemicalSlotInfo.GasSlotInfo(true,false,coolantGasTank));
-            gasConfig.addSlotInfo(DataType.OUTPUT_1,new ChemicalSlotInfo.GasSlotInfo(false,true,wasteTank));
-            gasConfig.addSlotInfo(DataType.OUTPUT_2,new ChemicalSlotInfo.GasSlotInfo(false,true,heatedCoolantTank));
-            gasConfig.setDataType(DataType.INPUT_1,RelativeSide.FRONT);
-            gasConfig.setDataType(DataType.INPUT_2,RelativeSide.TOP);
-            gasConfig.setDataType(DataType.OUTPUT_1,RelativeSide.BOTTOM);
-            gasConfig.setDataType(DataType.OUTPUT_2,RelativeSide.BACK);
-        }
-        ConfigInfo fluidConfig = configComponent.getConfig(TransmissionType.FLUID);
-        if (fluidConfig!=null){
-            fluidConfig.addSlotInfo(DataType.INPUT,new FluidSlotInfo(true,false,coolantFluidTank));
-        }
-        ejectorComponent = new TileComponentEjector(this);
-        ejectorComponent.setOutputData(configComponent, TransmissionType.GAS,TransmissionType.FLUID)
-                .setCanEject(type -> MekanismUtils.canFunction(this));
+    /**
+     * Generator -- a block that produces energy. It has a certain amount of fuel it can store as well as an output rate.
+     *
+     * @param blockProvider
+     * @param pos
+     * @param state
+     * @param maxOutput
+     */
+    public TileEntityCompactTurbine(IBlockProvider blockProvider, BlockPos pos, BlockState state, @NotNull FloatingLongSupplier maxOutput) {
+        super(blockProvider, pos, state, maxOutput);
     }
 
     @NotNull
     @Override
     public IChemicalTankHolder<Gas, GasStack, IGasTank> getInitialGasTanks(IContentsListener listener) {
-        ChemicalTankHelper<Gas, GasStack, IGasTank> builder = ChemicalTankHelper.forSideGasWithConfig(this::getDirection,this::getConfig);
-        builder.addTank(fuelTank = new FuelTank(listener));
-        builder.addTank(coolantGasTank = new CoolantGasTank(listener));
-        builder.addTank(wasteTank = new WasteTank(listener));
-        builder.addTank(heatedCoolantTank = new HeatedCoolantTank(listener));
+        ChemicalTankHelper<Gas, GasStack, IGasTank> builder = ChemicalTankHelper.forSide(this::getDirection);
+        builder.addTank(fuelTank = new FuelTank(listener), RelativeSide.LEFT, RelativeSide.RIGHT, RelativeSide.BACK);
+        builder.addTank(coolantGasTank = new CoolantGasTank(listener),RelativeSide.TOP);
+        builder.addTank(wasteTank = new WasteTank(listener),RelativeSide.BOTTOM);
+        builder.addTank(heatedCoolantTank = new HeatedCoolantTank(listener),RelativeSide.BACK);
         return builder.build();
     }
 
     @NotNull
     @Override
     public IFluidTankHolder getInitialFluidTanks(IContentsListener listener){
-        FluidTankHelper builder = FluidTankHelper.forSideWithConfig(this::getDirection,this::getConfig);
-        builder.addTank(coolantFluidTank = new CoolantFluidTank(listener));
+        FluidTankHelper builder = FluidTankHelper.forSide(this::getDirection);
+        builder.addTank(coolantFluidTank = new CoolantFluidTank(listener),RelativeSide.TOP);
         return builder.build();
     }
 
@@ -137,12 +123,20 @@ public class TileEntityCompactFissionReactor extends TileEntityConfigurableMachi
         return builder.build();
     }
 
+    @NotNull
+    @Override
+    protected IInventorySlotHolder getInitialInventory(IContentsListener listener) {
+        InventorySlotHelper builder = InventorySlotHelper.forSide(this::getDirection);
+        builder.addSlot(energySlot = EnergyInventorySlot.drain(getEnergyContainer(), listener, 143, 35), RelativeSide.RIGHT);
+        return builder.build();
+    }
 
     @Override
     protected void onUpdateServer() {
         super.onUpdateServer();
+        energySlot.drainContainer();
 
-        if (!fuelTank.isEmpty() && MekanismUtils.canFunction(this)) {
+        if (!fuelTank.isEmpty() && MekanismUtils.canFunction(this) && getEnergyContainer().insert(generationRate, Action.SIMULATE, AutomationType.INTERNAL).isZero()) {
             setActive(true);
             if (!fuelTank.isEmpty()) {
                 maxBurnTicks = 1;
@@ -152,9 +146,11 @@ public class TileEntityCompactFissionReactor extends TileEntityConfigurableMachi
 
             long toUse = getToUse();
             FloatingLong toUseGeneration = generationRate.multiply(toUse);
+            updateMaxOutputRaw(MekanismConfig.general.FROM_H2.get().max(toUseGeneration));
 
             long total = burnTicks + fuelTank.getStored() * maxBurnTicks;
             total -= toUse;
+            getEnergyContainer().insert(toUseGeneration, Action.EXECUTE, AutomationType.INTERNAL);
             if (!fuelTank.isEmpty()) {
                 //TODO: Improve this as it is sort of hacky
                 fuelTank.setStack(new GasStack(fuelTank.getStack(), total / maxBurnTicks));
@@ -178,7 +174,7 @@ public class TileEntityCompactFissionReactor extends TileEntityConfigurableMachi
                     heatCapacitor.handleHeat(-caseCoolantHeat);
                 }
             }   else if (!coolantGasTank.isEmpty()) {
-                coolantGasTank.getStack().ifAttributePresent(CooledCoolant.class, coolantType -> {
+                coolantGasTank.getStack().ifAttributePresent(GasAttributes.CooledCoolant.class, coolantType -> {
                     double caseCoolantHeat = heat * coolantType.getConductivity();
                     lastBoilRate = clampCoolantHeated(caseCoolantHeat / coolantType.getThermalEnthalpy(), coolantGasTank.getStored());
                     if (lastBoilRate > 0) {
@@ -212,6 +208,7 @@ public class TileEntityCompactFissionReactor extends TileEntityConfigurableMachi
         burnTicks = 0;
         maxBurnTicks = 0;
         generationRate = FloatingLong.ZERO;
+        updateMaxOutputRaw(MekanismConfig.general.FROM_H2.get());
     }
 
     private long getToUse() {
@@ -220,6 +217,7 @@ public class TileEntityCompactFissionReactor extends TileEntityConfigurableMachi
         }
         long max = (long) Math.ceil(CompactMekanismMachinesConfig.machines.cfrBurnRate.get() * (fuelTank.getStored() / (double) fuelTank.getCapacity()));
         max = Math.min(maxBurnTicks * fuelTank.getStored() + burnTicks, max);
+        max = Math.min(getEnergyContainer().getNeeded().divide(generationRate).intValue(), max);
         return max;
     }
 
@@ -259,15 +257,20 @@ public class TileEntityCompactFissionReactor extends TileEntityConfigurableMachi
     public void addContainerTrackers(MekanismContainer container) {
         super.addContainerTrackers(container);
         container.track(SyncableFloatingLong.create(this::getGenerationRate, value -> generationRate = value));
+        container.track(syncableMaxOutput());
         container.track(SyncableDouble.create(this::getUsed, value -> gasUsedLastTick = value));
         container.track(SyncableInt.create(this::getMaxBurnTicks, value -> maxBurnTicks = value));
     }
 
     //Methods relating to IComputerTile
+    @Override
+    FloatingLong getProductionRate() {
+        return getGenerationRate().multiply(getUsed()).multiply(getMaxBurnTicks());
+    }
     //End methods IComputerTile
 
     //Implementation of gas tank that on no longer being empty updates the output rate of this generator
-    private class FuelTank extends VariableCapacityGasTank {
+    private class FuelTank extends VariableCapacityChemicalTankBuilder.VariableCapacityGasTank {
 
         protected FuelTank(@Nullable IContentsListener listener) {
             super(CompactMekanismMachinesConfig.machines.cfrFuelTankCapacity, ChemicalTankBuilder.GAS.notExternal, ChemicalTankBuilder.GAS.alwaysTrueBi,
@@ -289,12 +292,15 @@ public class TileEntityCompactFissionReactor extends TileEntityConfigurableMachi
         }
 
         private void recheckOutput(@NotNull GasStack stack, boolean wasEmpty) {
+            if (wasEmpty && !stack.isEmpty()) {
+                getType().ifAttributePresent(GasAttributes.Fuel.class, fuel -> updateMaxOutputRaw(fuel.getEnergyPerTick()));
+            }
         }
     }
-    private class CoolantGasTank extends VariableCapacityGasTank{
+    private class CoolantGasTank extends VariableCapacityChemicalTankBuilder.VariableCapacityGasTank {
         protected  CoolantGasTank(@Nullable IContentsListener listener){
             super(CompactMekanismMachinesConfig.machines.cfrCoolantGasTankCapacity,ChemicalTankBuilder.GAS.notExternal,ChemicalTankBuilder.GAS.alwaysTrueBi,
-                    gas -> gas.has(CooledCoolant.class),null,listener);
+                    gas -> gas.has(GasAttributes.CooledCoolant.class),null,listener);
         }
         @Override
         public void setStack(@NotNull GasStack stack) {
@@ -316,26 +322,26 @@ public class TileEntityCompactFissionReactor extends TileEntityConfigurableMachi
 
     private class CoolantFluidTank extends VariableCapacityFluidTank {
         protected  CoolantFluidTank(@Nullable IContentsListener listener){
-            super(CompactMekanismMachinesConfig.machines.cfrCoolantFluidTankCapacity,ConstantPredicates.notExternal(), ConstantPredicates.alwaysTrueBi(),
+            super(CompactMekanismMachinesConfig.machines.cfrCoolantFluidTankCapacity, ConstantPredicates.notExternal(), ConstantPredicates.alwaysTrueBi(),
                     fluid -> fluid.isFluidEqual(new FluidStack(Fluids.WATER,1)),listener);
         }
     }
 
-    private  class HeatedCoolantTank extends VariableCapacityGasTank {
+    private  class HeatedCoolantTank extends VariableCapacityChemicalTankBuilder.VariableCapacityGasTank {
         protected HeatedCoolantTank(@Nullable IContentsListener listener){
             super(CompactMekanismMachinesConfig.machines.cfrHeatedCoolantTankCapacity,ConstantPredicates.alwaysTrueBi(),ConstantPredicates.internalOnly(),
-                    gas -> (gas.has(GasAttributes.HeatedCoolant.class)||gas.equals(MekanismGases.STEAM.get())),ChemicalAttributeValidator.ALWAYS_ALLOW,listener);
+                    gas -> (gas.has(GasAttributes.HeatedCoolant.class)||gas.equals(MekanismGases.STEAM.get())), ChemicalAttributeValidator.ALWAYS_ALLOW,listener);
         }
     }
 
-    private  class  WasteTank extends VariableCapacityGasTank{
+    private  class  WasteTank extends VariableCapacityChemicalTankBuilder.VariableCapacityGasTank {
         protected WasteTank(@Nullable IContentsListener listener){
             super(CompactMekanismMachinesConfig.machines.cfrWasteTankCapacity,ChemicalTankBuilder.GAS.alwaysTrueBi,ChemicalTankBuilder.GAS.internalOnly,
                     gas -> gas.equals(MekanismGases.NUCLEAR_WASTE.getChemical()), ChemicalAttributeValidator.ALWAYS_ALLOW,listener);
         }
     }
 
-    public class HeatTank extends VariableHeatCapacitor{
+    public class HeatTank extends VariableHeatCapacitor {
         protected HeatTank(@Nullable IContentsListener listener){
             super(CompactMekanismMachinesConfig.machines.cfrHeatTankCpacity.get(),() -> INVERSE_CONDUCTION_COEFFICIENT, () -> INVERSE_INSULATION_COEFFICIENT, () -> biomeAmbientTemp, null);
         }

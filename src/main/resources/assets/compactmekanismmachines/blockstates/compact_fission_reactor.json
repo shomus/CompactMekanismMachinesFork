@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "compactmekanismmachines:block/compact_fission_reactor"
+    },
+    "facing=south": {
+      "model": "compactmekanismmachines:block/compact_fission_reactor",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "compactmekanismmachines:block/compact_fission_reactor",
+      "y": -90
+    },
+    "facing=east": {
+      "model": "compactmekanismmachines:block/compact_fission_reactor",
+      "y": 90
+    }
+  }
+}
