@@ -1,6 +1,7 @@
 package com.CompactMekanismMachines.client;
 
 import com.CompactMekanismMachines.client.gui.GuiCompactFissionReactor;
+import com.CompactMekanismMachines.client.gui.GuiCompactIndustrialTurbine;
 import com.CompactMekanismMachines.common.CompactMekanismMachines;
 import com.CompactMekanismMachines.common.registries.CompactContainerTypes;
 import com.CompactMekanismMachines.common.registries.CompactTileEntityTypes;
@@ -21,12 +22,12 @@ import net.minecraftforge.registries.RegisterEvent;
 @Mod.EventBusSubscriber(modid = CompactMekanismMachines.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class CompactClientRegistration {
     private CompactClientRegistration(){}
-
-    public String abc = CompactContainerTypes.COMPACT_FISSION_REACTOR.get().toString();
+    ;
     @SubscribeEvent(priority = EventPriority.LOW)
     public static void registerContainers(RegisterEvent event) {
         event.register(Registries.MENU, helper -> {
             ClientRegistrationUtil.registerScreen(CompactContainerTypes.COMPACT_FISSION_REACTOR, GuiCompactFissionReactor::new);
+            ClientRegistrationUtil.registerScreen(CompactContainerTypes.COMPACT_INDUSTRIAL_TURBINE, GuiCompactIndustrialTurbine::new);
         });
     }
 }

@@ -50,6 +50,7 @@ import mekanism.common.tile.base.SubstanceType;
 import mekanism.generators.common.config.MekanismGeneratorsConfig;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.fluids.FluidStack;
@@ -57,6 +58,9 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import com.CompactMekanismMachines.common.registries.CompactBlocks;
 import com.CompactMekanismMachines.common.config.CompactMekanismMachinesConfig;
+
+import java.util.EnumSet;
+import java.util.Set;
 
 public class TileEntityCompactFissionReactor extends TileEntityConfigurableMachine {
 
@@ -80,6 +84,7 @@ public class TileEntityCompactFissionReactor extends TileEntityConfigurableMachi
     private static final double INVERSE_INSULATION_COEFFICIENT = 10_000;
     private static final double INVERSE_CONDUCTION_COEFFICIENT = 10;
     private static final double waterConductivity = 0.5;
+    private ConfigInfo gasConfig;
     @WrappingComputerMethod(wrapper = SpecialComputerMethodWrapper.ComputerIInventorySlotWrapper.class, methodNames = "getFuelItem", docPlaceholder = "fuel item slot")
     GasInventorySlot fuelSlot;
     @WrappingComputerMethod(wrapper = SpecialComputerMethodWrapper.ComputerIInventorySlotWrapper.class, methodNames = "getEnergyItem", docPlaceholder = "energy item slot")
@@ -90,7 +95,7 @@ public class TileEntityCompactFissionReactor extends TileEntityConfigurableMachi
         biomeAmbientTemp = HeatAPI.getAmbientTemp(this.getLevel(), this.getTilePos());
         configComponent = new TileComponentConfig(this, TransmissionType.GAS,TransmissionType.FLUID);
 
-        ConfigInfo gasConfig = configComponent.getConfig(TransmissionType.GAS);
+        gasConfig = configComponent.getConfig(TransmissionType.GAS);
         if (gasConfig !=null){
             gasConfig.addSlotInfo(DataType.INPUT_1, new ChemicalSlotInfo.GasSlotInfo(true,false,fuelTank));
             gasConfig.addSlotInfo(DataType.INPUT_2, new ChemicalSlotInfo.GasSlotInfo(true,false,coolantGasTank));
@@ -141,9 +146,12 @@ public class TileEntityCompactFissionReactor extends TileEntityConfigurableMachi
     @Override
     protected void onUpdateServer() {
         super.onUpdateServer();
-
         if (!fuelTank.isEmpty() && MekanismUtils.canFunction(this)) {
             setActive(true);
+            Set<Direction> emitDirections = EnumSet.noneOf(Direction.class);
+            emitDirections.addAll(gasConfig.getSidesForOutput(DataType.OUTPUT_2));
+
+
             if (!fuelTank.isEmpty()) {
                 maxBurnTicks = 1;
                 generationRate = FloatingLong.create(50000);
