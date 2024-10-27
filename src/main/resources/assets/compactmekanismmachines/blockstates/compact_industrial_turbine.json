@@ -1,0 +1,34 @@
+{
+  "variants": {
+    "facing=north,active=false": {
+      "model": "compactmekanismmachines:block/compact_industrial_turbine/inactive"
+    },
+    "facing=south,active=false": {
+      "model": "compactmekanismmachines:block/compact_industrial_turbine/inactive",
+      "y": 180
+    },
+    "facing=east,active=false": {
+      "model": "compactmekanismmachines:block/compact_industrial_turbine/inactive",
+      "y": 90
+    },
+    "facing=west,active=false": {
+      "model": "compactmekanismmachines:block/compact_industrial_turbine/inactive",
+      "y": -90
+    },
+    "facing=north,active=true": {
+      "model": "compactmekanismmachines:block/compact_industrial_turbine/active"
+    },
+    "facing=south,active=true": {
+      "model": "compactmekanismmachines:block/compact_industrial_turbine/active",
+      "y": 180
+    },
+    "facing=east,active=true": {
+      "model": "compactmekanismmachines:block/compact_industrial_turbine/active",
+      "y": 90
+    },
+    "facing=west,active=true": {
+      "model": "compactmekanismmachines:block/compact_industrial_turbine/active",
+      "y": -90
+    }
+  }
+}

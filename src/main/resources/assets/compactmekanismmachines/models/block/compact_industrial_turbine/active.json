@@ -1,0 +1,8 @@
+{
+  "parent": "compactmekanismmachines:block/machine_front_led",
+  "textures": {
+    "sides": "compactmekanismmachines:block/compact_industrial_turbine_side",
+    "front": "compactmekanismmachines:block/compact_industrial_turbine_front",
+    "front_led": "compactmekanismmachines:block/compact_industrial_turbine_on_led"
+  }
+}

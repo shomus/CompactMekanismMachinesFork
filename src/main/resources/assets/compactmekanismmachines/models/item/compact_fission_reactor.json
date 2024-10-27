@@ -1,3 +1,3 @@
 {
-  "parent": "compactmekanismmachines:block/compact_fission_reactor"
+  "parent": "compactmekanismmachines:block/compact_fission_reactor/inactive"
 }

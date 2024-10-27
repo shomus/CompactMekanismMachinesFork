@@ -1,0 +1,7 @@
+{
+  "parent": "compactmekanismmachines:block/machine",
+  "textures": {
+    "sides": "compactmekanismmachines:block/compact_fission_reactor_side",
+    "front": "compactmekanismmachines:block/compact_fission_reactor_front"
+  }
+}

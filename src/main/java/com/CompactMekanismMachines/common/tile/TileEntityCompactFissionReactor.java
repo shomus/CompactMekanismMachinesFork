@@ -61,6 +61,7 @@ import com.CompactMekanismMachines.common.config.CompactMekanismMachinesConfig;
 
 import java.util.EnumSet;
 import java.util.Set;
+import java.util.function.LongSupplier;
 
 public class TileEntityCompactFissionReactor extends TileEntityConfigurableMachine {
 
@@ -110,7 +111,7 @@ public class TileEntityCompactFissionReactor extends TileEntityConfigurableMachi
         if (fluidConfig!=null){
             fluidConfig.addSlotInfo(DataType.INPUT,new FluidSlotInfo(true,false,coolantFluidTank));
         }
-        ejectorComponent = new TileComponentEjector(this);
+        ejectorComponent = new TileComponentEjector(this, ()->Long.MAX_VALUE,()->Integer.MAX_VALUE,()-> FloatingLong.create(Long.MAX_VALUE));
         ejectorComponent.setOutputData(configComponent, TransmissionType.GAS,TransmissionType.FLUID)
                 .setCanEject(type -> MekanismUtils.canFunction(this));
     }

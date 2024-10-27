@@ -94,7 +94,7 @@ public class TileEntityCompactIndustrialTurbine extends TileEntityConfigurableMa
             fluidConfig.addSlotInfo(DataType.OUTPUT,new FluidSlotInfo(false,true,ventTank));
             fluidConfig.setDataType(DataType.OUTPUT,RelativeSide.TOP);
         }
-        ejectorComponent = new TileComponentEjector(this);
+        ejectorComponent = new TileComponentEjector(this, ()->Long.MAX_VALUE,()->Integer.MAX_VALUE,()-> FloatingLong.create(Long.MAX_VALUE));
         ejectorComponent.setOutputData(configComponent, TransmissionType.GAS,TransmissionType.FLUID)
                 .setCanEject(type -> MekanismUtils.canFunction(this));
     }
@@ -150,7 +150,7 @@ public class TileEntityCompactIndustrialTurbine extends TileEntityConfigurableMa
                     double rate = lowerVolume * (CompactMekanismMachinesConfig.machines.turbinevertualdispersers.get() * MekanismGeneratorsConfig.generators.turbineDisperserGasFlow.get());
                     rate = Math.min(rate, CompactMekanismMachinesConfig.machines.turbinevertualvents.get() * MekanismGeneratorsConfig.generators.turbineVentGasFlow.get());
                     double proportion = stored / (double) getSteamCapacity();
-                    rate = Math.min(Math.min(stored, rate), energyNeeded.divide(energyMultiplier).doubleValue()) * proportion*3000000;
+                    rate = Math.min(Math.min(stored, rate), energyNeeded.divide(energyMultiplier).doubleValue()) * proportion*100000;
                     clientFlow = MathUtils.clampToLong(rate);
                     if (clientFlow > 0) {
                         energyContainer.insert(energyMultiplier.multiply(rate), Action.EXECUTE, AutomationType.INTERNAL);

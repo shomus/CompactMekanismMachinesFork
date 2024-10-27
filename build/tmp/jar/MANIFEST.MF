@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Specification-Title: compactmekanismmachines
-Specification-Vendor: YourNameHere, OtherNameHere
+Specification-Vendor: nekorobi_0
 Specification-Version: 1
 Implementation-Title: compressed_machine
 Implementation-Version: 0.1.0
-Implementation-Vendor: YourNameHere, OtherNameHere
-Implementation-Timestamp: 2024-09-29T21:22:31+0900
+Implementation-Vendor: nekorobi_0
+Implementation-Timestamp: 2024-10-27T22:06:25+0900
 
