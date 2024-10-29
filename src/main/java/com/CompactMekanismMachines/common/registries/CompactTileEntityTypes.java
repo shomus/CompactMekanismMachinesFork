@@ -1,6 +1,7 @@
 package com.CompactMekanismMachines.common.registries;
 
 import com.CompactMekanismMachines.common.CompactMekanismMachines;
+import com.CompactMekanismMachines.common.tile.CompressedWindGenerator.TileEntityCompressedWindGenerator_x2;
 import com.CompactMekanismMachines.common.tile.TileEntityCompactFissionReactor;
 import com.CompactMekanismMachines.common.tile.TileEntityCompactIndustrialTurbine;
 import mekanism.common.registration.impl.TileEntityTypeDeferredRegister;
@@ -16,4 +17,7 @@ public class CompactTileEntityTypes {
 
     public static final TileEntityTypeRegistryObject<TileEntityCompactFissionReactor> COMPACT_FISSION_REACTOR = TILE_ENTITY_TYPES.register(CompactBlocks.COMPACT_FISSION_REACTOR,TileEntityCompactFissionReactor::new, TileEntityMekanism::tickServer,TileEntityMekanism::tickClient);
     public static final TileEntityTypeRegistryObject<TileEntityCompactIndustrialTurbine> COMPACT_INDUSTRIAL_TURBINE = TILE_ENTITY_TYPES.register(CompactBlocks.COMPACT_INDUSTRIAL_TURBINE, TileEntityCompactIndustrialTurbine::new, TileEntityMekanism::tickServer,TileEntityMekanism::tickClient);
+
+
+    public static final TileEntityTypeRegistryObject<TileEntityCompressedWindGenerator_x2> WIND_GENERATOR_X2 = TILE_ENTITY_TYPES.register(CompactBlocks.WIND_GENERATOR_X2, TileEntityCompressedWindGenerator_x2::new, TileEntityMekanism::tickServer,TileEntityMekanism::tickClient);
 }

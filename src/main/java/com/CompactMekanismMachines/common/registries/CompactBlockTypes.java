@@ -2,21 +2,27 @@ package com.CompactMekanismMachines.common.registries;
 
 import com.CompactMekanismMachines.common.config.CompactMekanismMachinesConfig;
 import com.CompactMekanismMachines.common.content.blocktype.BlockShapes;
+import com.CompactMekanismMachines.common.tile.CompressedWindGenerator.TileEntityCompressedWindGenerator_x2;
 import com.CompactMekanismMachines.common.tile.TileEntityCompactFissionReactor;
 import com.CompactMekanismMachines.common.tile.TileEntityCompactIndustrialTurbine;
+import com.CompactMekanismMachines.common.tile.TileEntityCompressedWindGenerator;
 import mekanism.api.Upgrade;
 import mekanism.api.math.FloatingLong;
 import mekanism.common.block.attribute.AttributeCustomSelectionBox;
 import mekanism.common.block.attribute.AttributeUpgradeSupport;
 import mekanism.common.block.attribute.Attributes;
 import mekanism.generators.common.GeneratorsLang;
+import mekanism.generators.common.config.MekanismGeneratorsConfig;
 import mekanism.generators.common.content.blocktype.Generator;
 import mekanism.generators.common.registries.GeneratorsContainerTypes;
 import mekanism.generators.common.registries.GeneratorsSounds;
 import mekanism.generators.common.registries.GeneratorsTileEntityTypes;
 import mekanism.generators.common.tile.TileEntityGasGenerator;
+import mekanism.generators.common.tile.TileEntityWindGenerator;
 
+import java.util.ArrayList;
 import java.util.EnumSet;
+import java.util.List;
 
 public class CompactBlockTypes {
 
@@ -44,5 +50,20 @@ public class CompactBlockTypes {
             .withSupportedUpgrades(EnumSet.of(Upgrade.MUFFLING))
             .withComputerSupport("compactindustrialturbine")
             .replace(Attributes.ACTIVE_MELT_LIGHT)
+            .build();
+    public static final Generator<TileEntityCompressedWindGenerator_x2> WIND_GENERATOR_X2 = Generator.GeneratorBuilder
+            .createGenerator(() -> CompactTileEntityTypes.WIND_GENERATOR_X2, GeneratorsLang.DESCRIPTION_WIND_GENERATOR)
+            .withGui(() -> GeneratorsContainerTypes.WIND_GENERATOR)
+            .withEnergyConfig(MekanismGeneratorsConfig.storageConfig.windGenerator)
+            .withCustomShape(mekanism.generators.common.content.blocktype.BlockShapes.WIND_GENERATOR)
+            .with(AttributeCustomSelectionBox.JAVA)
+            .withSound(GeneratorsSounds.WIND_GENERATOR)
+            .withSupportedUpgrades(EnumSet.of(Upgrade.MUFFLING))
+            .withBounding((pos, state, builder) -> {
+                for (int i = 0; i < 4; i++) {
+                    builder.add(pos.above(i + 1));
+                }
+            })
+            .withComputerSupport("compressed_windGenerator_x2")
             .build();
 }
