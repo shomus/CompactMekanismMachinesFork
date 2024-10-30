@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "abc",
+    "bdb",
+    "cba"
+  ],
+  "key": {
+    "a":{
+      "item": "mekanism:enriched_diamond"
+    },
+    "b": {
+      "item": "compactmekanismmachines:compressed_wind_generator_x32"
+    },
+    "c":{
+      "item": "mekanism:elite_control_circuit"
+    },
+    "d": {
+      "item": "mekanism:elite_tier_installer"
+    }
+  },
+  "result": {
+    "item": "compactmekanismmachines:compressed_wind_generator_x128"
+  }
+}

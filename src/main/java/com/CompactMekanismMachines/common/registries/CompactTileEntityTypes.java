@@ -1,7 +1,7 @@
 package com.CompactMekanismMachines.common.registries;
 
 import com.CompactMekanismMachines.common.CompactMekanismMachines;
-import com.CompactMekanismMachines.common.tile.CompressedWindGenerator.TileEntityCompressedWindGenerator_x2;
+import com.CompactMekanismMachines.common.tile.CompressedWindGenerator.*;
 import com.CompactMekanismMachines.common.tile.TileEntityCompactFissionReactor;
 import com.CompactMekanismMachines.common.tile.TileEntityCompactIndustrialTurbine;
 import mekanism.common.registration.impl.TileEntityTypeDeferredRegister;
@@ -20,4 +20,13 @@ public class CompactTileEntityTypes {
 
 
     public static final TileEntityTypeRegistryObject<TileEntityCompressedWindGenerator_x2> WIND_GENERATOR_X2 = TILE_ENTITY_TYPES.register(CompactBlocks.WIND_GENERATOR_X2, TileEntityCompressedWindGenerator_x2::new, TileEntityMekanism::tickServer,TileEntityMekanism::tickClient);
+    public static final TileEntityTypeRegistryObject<TileEntityCompressedWindGenerator_x8> WIND_GENERATOR_X8 = TILE_ENTITY_TYPES.register(CompactBlocks.WIND_GENERATOR_X8, TileEntityCompressedWindGenerator_x8::new, TileEntityMekanism::tickServer,TileEntityMekanism::tickClient);
+    public static final TileEntityTypeRegistryObject<TileEntityCompressedWindGenerator_x32> WIND_GENERATOR_X32 = TILE_ENTITY_TYPES.register(CompactBlocks.WIND_GENERATOR_X32, TileEntityCompressedWindGenerator_x32::new, TileEntityMekanism::tickServer,TileEntityMekanism::tickClient);
+    public static final TileEntityTypeRegistryObject<TileEntityCompressedWindGenerator_x128> WIND_GENERATOR_X128 = TILE_ENTITY_TYPES.register(CompactBlocks.WIND_GENERATOR_X128, TileEntityCompressedWindGenerator_x128::new, TileEntityMekanism::tickServer,TileEntityMekanism::tickClient);
+    public static final TileEntityTypeRegistryObject<TileEntityCompressedWindGenerator_x512> WIND_GENERATOR_X512 = TILE_ENTITY_TYPES.register(CompactBlocks.WIND_GENERATOR_X512, TileEntityCompressedWindGenerator_x512::new, TileEntityMekanism::tickServer,TileEntityMekanism::tickClient);
+    public static final TileEntityTypeRegistryObject<TileEntityCompressedWindGenerator_x2048> WIND_GENERATOR_X2048 = TILE_ENTITY_TYPES.register(CompactBlocks.WIND_GENERATOR_X2048, TileEntityCompressedWindGenerator_x2048::new, TileEntityMekanism::tickServer,TileEntityMekanism::tickClient);
+    public static final TileEntityTypeRegistryObject<TileEntityCompressedWindGenerator_x8192> WIND_GENERATOR_X8192 = TILE_ENTITY_TYPES.register(CompactBlocks.WIND_GENERATOR_X8192, TileEntityCompressedWindGenerator_x8192::new, TileEntityMekanism::tickServer,TileEntityMekanism::tickClient);
+    public static final TileEntityTypeRegistryObject<TileEntityCompressedWindGenerator_x32768> WIND_GENERATOR_X32768 = TILE_ENTITY_TYPES.register(CompactBlocks.WIND_GENERATOR_X32768, TileEntityCompressedWindGenerator_x32768::new, TileEntityMekanism::tickServer,TileEntityMekanism::tickClient);
+    public static final TileEntityTypeRegistryObject<TileEntityCompressedWindGenerator_x131072> WIND_GENERATOR_X131072 = TILE_ENTITY_TYPES.register(CompactBlocks.WIND_GENERATOR_X131072, TileEntityCompressedWindGenerator_x131072::new, TileEntityMekanism::tickServer,TileEntityMekanism::tickClient);
+    public static final TileEntityTypeRegistryObject<TileEntityCompressedWindGenerator_x532480> WIND_GENERATOR_X532480 = TILE_ENTITY_TYPES.register(CompactBlocks.WIND_GENERATOR_X532480, TileEntityCompressedWindGenerator_x532480::new, TileEntityMekanism::tickServer,TileEntityMekanism::tickClient);
 }

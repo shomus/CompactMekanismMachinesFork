@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "aba",
+    "bdb",
+    "aba"
+  ],
+  "key": {
+    "a":{
+      "item": "mekanism:pellet_polonium"
+    },
+    "b": {
+      "item": "compactmekanismmachines:compressed_wind_generator_x32768"
+    },
+    "d":{
+      "item": "mekanism:dictionary"
+    }
+  },
+  "result": {
+    "item": "compactmekanismmachines:compressed_wind_generator_x131072"
+  }
+}

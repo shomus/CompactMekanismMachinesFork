@@ -4,6 +4,7 @@ package com.CompactMekanismMachines.common;
 import com.CompactMekanismMachines.common.config.CompactMekanismMachinesConfig;
 import com.CompactMekanismMachines.common.registries.CompactBlocks;
 import com.CompactMekanismMachines.common.registries.CompactContainerTypes;
+import com.CompactMekanismMachines.common.registries.CompactCreativeTabs;
 import com.CompactMekanismMachines.common.registries.CompactTileEntityTypes;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.registries.Registries;
@@ -47,6 +48,7 @@ public class CompactMekanismMachines {
 
         CREATIVE_MODE_TABS.register(modEventBus);
         CompactBlocks.BLOCKS.register(modEventBus);
+        CompactCreativeTabs.CREATIVE_TABS.register(modEventBus);
         CompactContainerTypes.CONTAINER_TYPES.register(modEventBus);
         CompactTileEntityTypes.TILE_ENTITY_TYPES.register(modEventBus);
         // Register ourselves for server and other game events we are interested in

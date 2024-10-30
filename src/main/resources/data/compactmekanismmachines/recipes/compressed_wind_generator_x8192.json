@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "aba",
+    "bab",
+    "aba"
+  ],
+  "key": {
+    "a":{
+      "item": "mekanism:hdpe_sheet"
+    },
+    "b": {
+      "item": "compactmekanismmachines:compressed_wind_generator_x2048"
+    }
+  },
+  "result": {
+    "item": "compactmekanismmachines:compressed_wind_generator_x8192"
+  }
+}

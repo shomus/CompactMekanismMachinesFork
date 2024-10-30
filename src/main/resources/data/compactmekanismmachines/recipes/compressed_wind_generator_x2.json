@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "aba"
+  ],
+  "key": {
+    "a": {
+      "item": "mekanismgenerators:wind_generator"
+    },
+    "b": {
+      "item": "mekanism:basic_control_circuit"
+    }
+  },
+  "result": {
+    "item": "compactmekanismmachines:compressed_wind_generator_x2"
+  }
+}

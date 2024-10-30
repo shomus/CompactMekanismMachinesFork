@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "abc",
+    "bdb",
+    "cba"
+  ],
+  "key": {
+    "a":{
+      "item": "mekanism:energy_tablet"
+    },
+    "b": {
+      "item": "compactmekanismmachines:compressed_wind_generator_x2"
+    },
+    "c":{
+      "item": "mekanism:basic_control_circuit"
+    },
+    "d": {
+      "item": "mekanism:steel_casing"
+    }
+  },
+  "result": {
+    "item": "compactmekanismmachines:compressed_wind_generator_x8"
+  }
+}

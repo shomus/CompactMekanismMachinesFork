@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "abc",
+    "bdb",
+    "cba"
+  ],
+  "key": {
+    "a":{
+      "item": "mekanism:ultimate_induction_cell"
+    },
+    "b": {
+      "item": "compactmekanismmachines:compressed_wind_generator_x8192"
+    },
+    "d":{
+      "item": "mekanism:pellet_polonium"
+    },
+    "c": {
+      "item": "mekanism:ultimate_induction_provider"
+    }
+  },
+  "result": {
+    "item": "compactmekanismmachines:compressed_wind_generator_x32768"
+  }
+}

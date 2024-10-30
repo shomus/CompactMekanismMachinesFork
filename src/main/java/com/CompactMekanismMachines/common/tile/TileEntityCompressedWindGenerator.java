@@ -1,10 +1,14 @@
 package com.CompactMekanismMachines.common.tile;
 
+import com.CompactMekanismMachines.common.registries.CompactBlocks;
+import com.CompactMekanismMachines.common.tile.CompressedWindGenerator.TileEntityCompressedWindGenerator_x2;
+import com.CompactMekanismMachines.common.tile.CompressedWindGenerator.TileEntityCompressedWindGenerator_x532480;
 import mekanism.api.Action;
 import mekanism.api.AutomationType;
 import mekanism.api.IContentsListener;
 import mekanism.api.RelativeSide;
 import mekanism.api.math.FloatingLong;
+import mekanism.common.block.prefab.BlockTile;
 import mekanism.common.capabilities.holder.slot.IInventorySlotHolder;
 import mekanism.common.capabilities.holder.slot.InventorySlotHelper;
 import mekanism.common.integration.computer.SpecialComputerMethodWrapper;
@@ -14,10 +18,13 @@ import mekanism.common.inventory.container.MekanismContainer;
 import mekanism.common.inventory.container.sync.SyncableBoolean;
 import mekanism.common.inventory.container.sync.SyncableFloatingLong;
 import mekanism.common.inventory.slot.EnergyInventorySlot;
+import mekanism.common.item.block.machine.ItemBlockMachine;
+import mekanism.common.registration.impl.BlockRegistryObject;
 import mekanism.common.tile.interfaces.IBoundingBlock;
 import mekanism.common.util.MekanismUtils;
 import mekanism.generators.common.config.MekanismGeneratorsConfig;
-import mekanism.generators.common.registries.GeneratorsBlocks;
+import mekanism.generators.common.content.blocktype.Generator;
+import mekanism.generators.common.item.generator.ItemBlockWindGenerator;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.Level;
@@ -25,7 +32,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.NotNull;
 
-public abstract class TileEntityCompressedWindGenerator extends TileEntityGenerator implements IBoundingBlock {
+public abstract class TileEntityCompressedWindGenerator<TILE extends TileEntityCompressedWindGenerator<TILE>> extends TileEntityGenerator implements IBoundingBlock {
 
 
     public static final float SPEED = 32F;
@@ -34,12 +41,12 @@ public abstract class TileEntityCompressedWindGenerator extends TileEntityGenera
     private double angle;
     private FloatingLong currentMultiplier = FloatingLong.ZERO;
     private boolean isBlacklistDimension;
-    protected long multiply;
+    protected static long multiply;
     @WrappingComputerMethod(wrapper = SpecialComputerMethodWrapper.ComputerIInventorySlotWrapper.class, methodNames = "getEnergyItem", docPlaceholder = "energy item slot")
     EnergyInventorySlot energySlot;
 
-    public TileEntityCompressedWindGenerator(BlockPos pos, BlockState state,Long multiply_) {
-        super(GeneratorsBlocks.WIND_GENERATOR, pos, state, MekanismGeneratorsConfig.generators.windGenerationMax);
+    public TileEntityCompressedWindGenerator(BlockPos pos, BlockState state, Long multiply_,BlockRegistryObject<BlockTile.BlockTileModel<TILE, Generator<TILE>>, ItemBlockWindGenerator> block) {
+        super(block, pos, state, ()->MekanismGeneratorsConfig.generators.windGenerationMax.get().multiply(multiply_));
         multiply = multiply_;
     }
 
@@ -159,7 +166,7 @@ public abstract class TileEntityCompressedWindGenerator extends TileEntityGenera
         return getActive() ? MekanismGeneratorsConfig.generators.windGenerationMin.get().multiply(getCurrentMultiplier()) : FloatingLong.ZERO;
     }
     //End methods IComputerTile
-    long getMultiply(){
+    public static long getMultiply(){
         return multiply;
     }
 }

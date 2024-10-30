@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "abc",
+    "bdb",
+    "cba"
+  ],
+  "key": {
+    "a":{
+      "item": "mekanism:enriched_refined_obsidian"
+    },
+    "b": {
+      "item": "compactmekanismmachines:compressed_wind_generator_x128"
+    },
+    "c":{
+      "item": "mekanism:ultimate_control_circuit"
+    },
+    "d": {
+      "item": "mekanism:ultimate_tier_installer"
+    }
+  },
+  "result": {
+    "item": "compactmekanismmachines:compressed_wind_generator_x512"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "aba",
+    "bab",
+    "aba"
+  ],
+  "key": {
+    "a":{
+      "item": "mekanism:teleportation_core"
+    },
+    "b": {
+      "item": "compactmekanismmachines:compressed_wind_generator_x512"
+    }
+  },
+  "result": {
+    "item": "compactmekanismmachines:compressed_wind_generator_x2048"
+  }
+}

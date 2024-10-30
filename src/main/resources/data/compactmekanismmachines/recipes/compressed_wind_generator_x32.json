@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "abc",
+    "bdb",
+    "cba"
+  ],
+  "key": {
+    "a":{
+      "item": "mekanism:enriched_redstone"
+    },
+    "b": {
+      "item": "compactmekanismmachines:compressed_wind_generator_x8"
+    },
+    "c":{
+      "item": "mekanism:advanced_control_circuit"
+    },
+    "d": {
+      "item": "mekanism:steel_casing"
+    }
+  },
+  "result": {
+    "item": "compactmekanismmachines:compressed_wind_generator_x32"
+  }
+}
