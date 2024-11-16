@@ -1,5 +1,7 @@
 {
+  "block.compactmekanismmachines.compact_industrial_turbine": "Compact Industrial Turbine",
   "block.compactmekanismmachines.compact_fission_reactor": "Compact Fission Reactor",
+  "container.compactmekanismmachines.compact_industrial_turbine": "Compact Industrial Turbine",
   "container.compactmekanismmachines.compact_fission_reactor": "Compact Fission Reactor",
   "container.compactmekanismmachines.compressed_wind_generator_x2": "Wind Generator x2",
   "container.compactmekanismmachines.compressed_wind_generator_x8": "Wind Generator x8",

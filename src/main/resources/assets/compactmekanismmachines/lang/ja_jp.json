@@ -1,5 +1,7 @@
 {
+  "block.compactmekanismmachines.compact_industrial_turbine": "Compact Industrial Turbine",
   "block.compactmekanismmachines.compact_fission_reactor": "1マス原子炉",
+  "container.compactmekanismmachines.compact_industrial_turbine": "Compact Industrial Turbine",
   "container.compactmekanismmachines.compact_fission_reactor": "1マス原子炉",
   "container.compactmekanismmachines.compressed_wind_generator_x2": "2倍圧縮風力発電機",
   "container.compactmekanismmachines.compressed_wind_generator_x8": "8倍圧縮風力発電機",
@@ -24,6 +26,4 @@
   "description.compactmekanismmachines.compressed_wind_generator_x131072": "アタイったらサイキョウね！",
   "description.compactmekanismmachines.compressed_wind_generator_x532480": "私の発電力は53万です。",
   "other.compactmekanismmachines.mod_name": "CompactMekanismMachines"
-
-
 }
