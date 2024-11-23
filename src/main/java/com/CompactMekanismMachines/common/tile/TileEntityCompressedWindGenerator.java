@@ -1,8 +1,5 @@
 package com.CompactMekanismMachines.common.tile;
 
-import com.CompactMekanismMachines.common.registries.CompactBlocks;
-import com.CompactMekanismMachines.common.tile.CompressedWindGenerator.TileEntityCompressedWindGenerator_x2;
-import com.CompactMekanismMachines.common.tile.CompressedWindGenerator.TileEntityCompressedWindGenerator_x532480;
 import mekanism.api.Action;
 import mekanism.api.AutomationType;
 import mekanism.api.IContentsListener;
@@ -18,7 +15,6 @@ import mekanism.common.inventory.container.MekanismContainer;
 import mekanism.common.inventory.container.sync.SyncableBoolean;
 import mekanism.common.inventory.container.sync.SyncableFloatingLong;
 import mekanism.common.inventory.slot.EnergyInventorySlot;
-import mekanism.common.item.block.machine.ItemBlockMachine;
 import mekanism.common.registration.impl.BlockRegistryObject;
 import mekanism.common.tile.interfaces.IBoundingBlock;
 import mekanism.common.util.MekanismUtils;
@@ -37,17 +33,17 @@ public abstract class TileEntityCompressedWindGenerator<TILE extends TileEntityC
 
     public static final float SPEED = 32F;
     public static final float SPEED_SCALED = 256F / SPEED;
+    private final Long multiply;
 
     private double angle;
     private FloatingLong currentMultiplier = FloatingLong.ZERO;
     private boolean isBlacklistDimension;
-    protected static long multiply;
     @WrappingComputerMethod(wrapper = SpecialComputerMethodWrapper.ComputerIInventorySlotWrapper.class, methodNames = "getEnergyItem", docPlaceholder = "energy item slot")
     EnergyInventorySlot energySlot;
 
     public TileEntityCompressedWindGenerator(BlockPos pos, BlockState state, Long multiply_,BlockRegistryObject<BlockTile.BlockTileModel<TILE, Generator<TILE>>, ItemBlockWindGenerator> block) {
         super(block, pos, state, ()->MekanismGeneratorsConfig.generators.windGenerationMax.get().multiply(multiply_));
-        multiply = multiply_;
+        this.multiply = multiply_;
     }
 
     @NotNull
@@ -166,7 +162,7 @@ public abstract class TileEntityCompressedWindGenerator<TILE extends TileEntityC
         return getActive() ? MekanismGeneratorsConfig.generators.windGenerationMin.get().multiply(getCurrentMultiplier()) : FloatingLong.ZERO;
     }
     //End methods IComputerTile
-    public static long getMultiply(){
-        return multiply;
+    public long getMultiply(){
+        return this.multiply;
     }
 }

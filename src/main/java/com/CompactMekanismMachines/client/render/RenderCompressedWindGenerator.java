@@ -28,7 +28,7 @@ public abstract class RenderCompressedWindGenerator<TILE extends TileEntityCompr
 
     @Override
     protected @NotNull String getProfilerSection() {
-        return GeneratorsProfilerConstants.WIND_GENERATOR+TILE.getMultiply();
+        return GeneratorsProfilerConstants.WIND_GENERATOR;
     }
 
     @Override
