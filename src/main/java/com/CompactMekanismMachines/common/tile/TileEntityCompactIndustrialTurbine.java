@@ -94,8 +94,13 @@ public class TileEntityCompactIndustrialTurbine extends TileEntityConfigurableMa
             fluidConfig.addSlotInfo(DataType.OUTPUT,new FluidSlotInfo(false,true,ventTank));
             fluidConfig.setDataType(DataType.OUTPUT,RelativeSide.TOP);
         }
+        ConfigInfo energyConfig = configComponent.getConfig(TransmissionType.ENERGY);
+        if (energyConfig!=null){
+            energyConfig.addSlotInfo(DataType.OUTPUT,new EnergySlotInfo(false,true,energyContainer));
+            energyConfig.setDataType(DataType.OUTPUT,RelativeSide.BOTTOM);
+        }
         ejectorComponent = new TileComponentEjector(this, ()->Long.MAX_VALUE,()->Integer.MAX_VALUE,()-> FloatingLong.create(Long.MAX_VALUE));
-        ejectorComponent.setOutputData(configComponent, TransmissionType.GAS,TransmissionType.FLUID)
+        ejectorComponent.setOutputData(configComponent, TransmissionType.GAS,TransmissionType.FLUID,TransmissionType.ENERGY)
                 .setCanEject(type -> MekanismUtils.canFunction(this));
     }
 
