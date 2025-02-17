@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "aba",
+    "bcb",
+    "aba"
+  ],
+  "key": {
+    "a": {
+      "item": "mekanism:thermal_evaporation_block"
+    },
+    "b": {
+      "item": "mekanism:alloy_atomic"
+    },
+    "c":{
+      "item": "mekanism:thermal_evaporation_controller"
+    }
+  },
+  "result": {
+    "item": "compactmekanismmachines:compact_thermal_evaporation"
+  }
+}

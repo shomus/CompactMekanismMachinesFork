@@ -64,7 +64,6 @@ import java.util.Set;
 import java.util.function.LongSupplier;
 
 public class TileEntityCompactFissionReactor extends TileEntityConfigurableMachine {
-
     /**
      * The tank this block is storing fuel in.
      */

@@ -26,6 +26,7 @@ public class MachinesConfig extends BaseMekanismConfig {
     public final CachedIntValue turbinevertualvents;
     public final CachedIntValue turbinevertualblades;
     public final CachedIntValue turbinevertuallowervolume;
+    public final CachedIntValue evaporationheight;
 
     MachinesConfig(){
         ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
@@ -51,6 +52,8 @@ public class MachinesConfig extends BaseMekanismConfig {
         this.turbinevertualvents = CachedIntValue.wrap(this,builder.comment("amount of virtual turbine vent block").defineInRange("upvolume",800,0,Integer.MAX_VALUE));
         this.turbinevertualblades = CachedIntValue.wrap(this,builder.comment("amount of virtual blade").defineInRange("blades",200,0,Integer.MAX_VALUE));
         this.turbinevertuallowervolume = CachedIntValue.wrap(this,builder.comment("vertual volume of lower section").defineInRange("lowervolume",500,0,Integer.MAX_VALUE));
+
+        this.evaporationheight = CachedIntValue.wrap(this,builder.comment("virtual height of compact thermal evaporation block").defineInRange("virtual_height",36,1,Integer.MAX_VALUE));
 
         this.configSpec = builder.build();
     }

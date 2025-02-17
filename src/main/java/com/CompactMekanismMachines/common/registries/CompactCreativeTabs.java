@@ -38,7 +38,8 @@ public class CompactCreativeTabs {
                     CompactBlocks.WIND_GENERATOR_X131072,
                     CompactBlocks.WIND_GENERATOR_X532480,
                     CompactBlocks.COMPACT_FISSION_REACTOR,
-                    CompactBlocks.COMPACT_INDUSTRIAL_TURBINE);
+                    CompactBlocks.COMPACT_INDUSTRIAL_TURBINE,
+                    CompactBlocks.COMPACT_THERMAL_EVAPORATION);
         }
     }
 }

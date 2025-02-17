@@ -6,10 +6,13 @@ import com.CompactMekanismMachines.common.content.blocktype.BlockShapes;
 import com.CompactMekanismMachines.common.tile.CompressedWindGenerator.*;
 import com.CompactMekanismMachines.common.tile.TileEntityCompactFissionReactor;
 import com.CompactMekanismMachines.common.tile.TileEntityCompactIndustrialTurbine;
+import com.CompactMekanismMachines.common.tile.TileEntityCompactThermalEvaporation;
 import mekanism.api.Upgrade;
 import mekanism.api.math.FloatingLong;
+import mekanism.common.MekanismLang;
 import mekanism.common.block.attribute.AttributeCustomSelectionBox;
 import mekanism.common.block.attribute.Attributes;
+import mekanism.common.content.blocktype.Machine;
 import mekanism.generators.common.GeneratorsLang;
 import mekanism.generators.common.config.MekanismGeneratorsConfig;
 import mekanism.generators.common.content.blocktype.Generator;
@@ -46,7 +49,12 @@ public class CompactBlockTypes {
             .replace(Attributes.ACTIVE_MELT_LIGHT)
             .build();
 
-
+    public static final Machine<TileEntityCompactThermalEvaporation> COMPACT_THERMAL_EVAPORATION = Machine.MachineBuilder
+            .createMachine(() -> CompactTileEntityTypes.COMPACT_THERMAL_EVAPORATION, MekanismLang.DESCRIPTION_THERMAL_EVAPORATION_CONTROLLER)
+            .withGui(()->CompactContainerTypes.COMPACT_THERMAL_EVAPORATION)
+            .with(AttributeCustomSelectionBox.JSON)
+            .withComputerSupport("compactthermalevaporation")
+            .build();
 
 
     public static final Generator<TileEntityCompressedWindGenerator_x2> WIND_GENERATOR_X2 = Generator.GeneratorBuilder

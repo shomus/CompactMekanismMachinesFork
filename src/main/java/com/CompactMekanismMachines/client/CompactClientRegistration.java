@@ -3,8 +3,10 @@ package com.CompactMekanismMachines.client;
 import com.CompactMekanismMachines.client.gui.CompressedWindGenerator.*;
 import com.CompactMekanismMachines.client.gui.GuiCompactFissionReactor;
 import com.CompactMekanismMachines.client.gui.GuiCompactIndustrialTurbine;
+import com.CompactMekanismMachines.client.gui.GuiCompactThermalEvaporation;
 import com.CompactMekanismMachines.client.render.CompressedWindGenerator.*;
 import com.CompactMekanismMachines.common.CompactMekanismMachines;
+import com.CompactMekanismMachines.common.registries.CompactBlocks;
 import com.CompactMekanismMachines.common.registries.CompactContainerTypes;
 import com.CompactMekanismMachines.common.registries.CompactTileEntityTypes;
 import mekanism.client.ClientRegistrationUtil;
@@ -39,7 +41,7 @@ public class CompactClientRegistration {
         event.register(Registries.MENU, helper -> {
             ClientRegistrationUtil.registerScreen(CompactContainerTypes.COMPACT_FISSION_REACTOR, GuiCompactFissionReactor::new);
             ClientRegistrationUtil.registerScreen(CompactContainerTypes.COMPACT_INDUSTRIAL_TURBINE, GuiCompactIndustrialTurbine::new);
-
+            ClientRegistrationUtil.registerScreen(CompactContainerTypes.COMPACT_THERMAL_EVAPORATION, GuiCompactThermalEvaporation::new);
 
 
             ClientRegistrationUtil.registerScreen(CompactContainerTypes.WIND_GENERATOR_X2, GuiCompressedWindGenerator_x2::new);
