@@ -23,12 +23,13 @@ import java.util.EnumSet;
 
 public class CompactBlockTypes {
 
-    private CompactBlockTypes(){}
+    private CompactBlockTypes() {
+    }
 
     public static final Generator<TileEntityCompactFissionReactor> COMPACT_FISSION_REACTOR = Generator.GeneratorBuilder
             .createGenerator(() -> CompactTileEntityTypes.COMPACT_FISSION_REACTOR, GeneratorsLang.DESCRIPTION_GAS_BURNING_GENERATOR)
             .withGui(() -> CompactContainerTypes.COMPACT_FISSION_REACTOR)
-            .withEnergyConfig(()-> FloatingLong.parseFloatingLong(String.valueOf(CompactMekanismMachinesConfig.machines.cfrEnergyCapacity.get())))
+            .withEnergyConfig(() -> FloatingLong.parseFloatingLong(String.valueOf(CompactMekanismMachinesConfig.machines.cfrEnergyCapacity.get())))
             .withCustomShape(BlockShapes.COMPACT_FISSION_REACTOR)
             .with(AttributeCustomSelectionBox.JSON)
             .withSound(GeneratorsSounds.FISSION_REACTOR)
@@ -40,7 +41,7 @@ public class CompactBlockTypes {
     public static final Generator<TileEntityCompactIndustrialTurbine> COMPACT_INDUSTRIAL_TURBINE = Generator.GeneratorBuilder
             .createGenerator(() -> CompactTileEntityTypes.COMPACT_INDUSTRIAL_TURBINE, GeneratorsLang.DESCRIPTION_GAS_BURNING_GENERATOR)
             .withGui(() -> CompactContainerTypes.COMPACT_INDUSTRIAL_TURBINE)
-            .withEnergyConfig(()-> FloatingLong.parseFloatingLong(String.valueOf(CompactMekanismMachinesConfig.machines.cfrEnergyCapacity.get())))
+            .withEnergyConfig(() -> FloatingLong.parseFloatingLong(String.valueOf(CompactMekanismMachinesConfig.machines.cfrEnergyCapacity.get())))
             .withCustomShape(BlockShapes.COMPACT_FISSION_REACTOR)
             .with(AttributeCustomSelectionBox.JSON)
             .withSound(GeneratorsSounds.FISSION_REACTOR)
@@ -51,7 +52,7 @@ public class CompactBlockTypes {
 
     public static final Machine<TileEntityCompactThermalEvaporation> COMPACT_THERMAL_EVAPORATION = Machine.MachineBuilder
             .createMachine(() -> CompactTileEntityTypes.COMPACT_THERMAL_EVAPORATION, MekanismLang.DESCRIPTION_THERMAL_EVAPORATION_CONTROLLER)
-            .withGui(()->CompactContainerTypes.COMPACT_THERMAL_EVAPORATION)
+            .withGui(() -> CompactContainerTypes.COMPACT_THERMAL_EVAPORATION)
             .with(AttributeCustomSelectionBox.JSON)
             .withComputerSupport("compactthermalevaporation")
             .build();
@@ -60,7 +61,7 @@ public class CompactBlockTypes {
     public static final Generator<TileEntityCompressedWindGenerator_x2> WIND_GENERATOR_X2 = Generator.GeneratorBuilder
             .createGenerator(() -> CompactTileEntityTypes.WIND_GENERATOR_X2, GeneratorsLang.DESCRIPTION_WIND_GENERATOR)
             .withGui(() -> CompactContainerTypes.WIND_GENERATOR_X2)
-            .withEnergyConfig(()->MekanismGeneratorsConfig.storageConfig.windGenerator.get().multiply(2))
+            .withEnergyConfig(() -> MekanismGeneratorsConfig.storageConfig.windGenerator.get().multiply(2))
             .withCustomShape(mekanism.generators.common.content.blocktype.BlockShapes.WIND_GENERATOR)
             .with(AttributeCustomSelectionBox.JAVA)
             .withSound(GeneratorsSounds.WIND_GENERATOR)
@@ -75,7 +76,7 @@ public class CompactBlockTypes {
     public static final Generator<TileEntityCompressedWindGenerator_x8> WIND_GENERATOR_X8 = Generator.GeneratorBuilder
             .createGenerator(() -> CompactTileEntityTypes.WIND_GENERATOR_X8, GeneratorsLang.DESCRIPTION_WIND_GENERATOR)
             .withGui(() -> CompactContainerTypes.WIND_GENERATOR_X8)
-            .withEnergyConfig(()->MekanismGeneratorsConfig.storageConfig.windGenerator.get().multiply(8))
+            .withEnergyConfig(() -> MekanismGeneratorsConfig.storageConfig.windGenerator.get().multiply(8))
             .withCustomShape(mekanism.generators.common.content.blocktype.BlockShapes.WIND_GENERATOR)
             .with(AttributeCustomSelectionBox.JAVA)
             .withSound(GeneratorsSounds.WIND_GENERATOR)
@@ -90,7 +91,7 @@ public class CompactBlockTypes {
     public static final Generator<TileEntityCompressedWindGenerator_x32> WIND_GENERATOR_X32 = Generator.GeneratorBuilder
             .createGenerator(() -> CompactTileEntityTypes.WIND_GENERATOR_X32, GeneratorsLang.DESCRIPTION_WIND_GENERATOR)
             .withGui(() -> CompactContainerTypes.WIND_GENERATOR_X32)
-            .withEnergyConfig(()->MekanismGeneratorsConfig.storageConfig.windGenerator.get().multiply(32))
+            .withEnergyConfig(() -> MekanismGeneratorsConfig.storageConfig.windGenerator.get().multiply(32))
             .withCustomShape(mekanism.generators.common.content.blocktype.BlockShapes.WIND_GENERATOR)
             .with(AttributeCustomSelectionBox.JAVA)
             .withSound(GeneratorsSounds.WIND_GENERATOR)
@@ -105,7 +106,7 @@ public class CompactBlockTypes {
     public static final Generator<TileEntityCompressedWindGenerator_x128> WIND_GENERATOR_X128 = Generator.GeneratorBuilder
             .createGenerator(() -> CompactTileEntityTypes.WIND_GENERATOR_X128, GeneratorsLang.DESCRIPTION_WIND_GENERATOR)
             .withGui(() -> CompactContainerTypes.WIND_GENERATOR_X128)
-            .withEnergyConfig(()->MekanismGeneratorsConfig.storageConfig.windGenerator.get().multiply(128))
+            .withEnergyConfig(() -> MekanismGeneratorsConfig.storageConfig.windGenerator.get().multiply(128))
             .withCustomShape(mekanism.generators.common.content.blocktype.BlockShapes.WIND_GENERATOR)
             .with(AttributeCustomSelectionBox.JAVA)
             .withSound(GeneratorsSounds.WIND_GENERATOR)
@@ -120,7 +121,7 @@ public class CompactBlockTypes {
     public static final Generator<TileEntityCompressedWindGenerator_x512> WIND_GENERATOR_X512 = Generator.GeneratorBuilder
             .createGenerator(() -> CompactTileEntityTypes.WIND_GENERATOR_X512, GeneratorsLang.DESCRIPTION_WIND_GENERATOR)
             .withGui(() -> CompactContainerTypes.WIND_GENERATOR_X512)
-            .withEnergyConfig(()->MekanismGeneratorsConfig.storageConfig.windGenerator.get().multiply(512))
+            .withEnergyConfig(() -> MekanismGeneratorsConfig.storageConfig.windGenerator.get().multiply(512))
             .withCustomShape(mekanism.generators.common.content.blocktype.BlockShapes.WIND_GENERATOR)
             .with(AttributeCustomSelectionBox.JAVA)
             .withSound(GeneratorsSounds.WIND_GENERATOR)
@@ -135,7 +136,7 @@ public class CompactBlockTypes {
     public static final Generator<TileEntityCompressedWindGenerator_x2048> WIND_GENERATOR_X2048 = Generator.GeneratorBuilder
             .createGenerator(() -> CompactTileEntityTypes.WIND_GENERATOR_X2048, GeneratorsLang.DESCRIPTION_WIND_GENERATOR)
             .withGui(() -> CompactContainerTypes.WIND_GENERATOR_X2048)
-            .withEnergyConfig(()->MekanismGeneratorsConfig.storageConfig.windGenerator.get().multiply(2048))
+            .withEnergyConfig(() -> MekanismGeneratorsConfig.storageConfig.windGenerator.get().multiply(2048))
             .withCustomShape(mekanism.generators.common.content.blocktype.BlockShapes.WIND_GENERATOR)
             .with(AttributeCustomSelectionBox.JAVA)
             .withSound(GeneratorsSounds.WIND_GENERATOR)
@@ -150,7 +151,7 @@ public class CompactBlockTypes {
     public static final Generator<TileEntityCompressedWindGenerator_x8192> WIND_GENERATOR_X8192 = Generator.GeneratorBuilder
             .createGenerator(() -> CompactTileEntityTypes.WIND_GENERATOR_X8192, GeneratorsLang.DESCRIPTION_WIND_GENERATOR)
             .withGui(() -> CompactContainerTypes.WIND_GENERATOR_X8192)
-            .withEnergyConfig(()->MekanismGeneratorsConfig.storageConfig.windGenerator.get().multiply(8192))
+            .withEnergyConfig(() -> MekanismGeneratorsConfig.storageConfig.windGenerator.get().multiply(8192))
             .withCustomShape(mekanism.generators.common.content.blocktype.BlockShapes.WIND_GENERATOR)
             .with(AttributeCustomSelectionBox.JAVA)
             .withSound(GeneratorsSounds.WIND_GENERATOR)
@@ -165,7 +166,7 @@ public class CompactBlockTypes {
     public static final Generator<TileEntityCompressedWindGenerator_x32768> WIND_GENERATOR_X32768 = Generator.GeneratorBuilder
             .createGenerator(() -> CompactTileEntityTypes.WIND_GENERATOR_X32768, GeneratorsLang.DESCRIPTION_WIND_GENERATOR)
             .withGui(() -> CompactContainerTypes.WIND_GENERATOR_X32768)
-            .withEnergyConfig(()->MekanismGeneratorsConfig.storageConfig.windGenerator.get().multiply(32768))
+            .withEnergyConfig(() -> MekanismGeneratorsConfig.storageConfig.windGenerator.get().multiply(32768))
             .withCustomShape(mekanism.generators.common.content.blocktype.BlockShapes.WIND_GENERATOR)
             .with(AttributeCustomSelectionBox.JAVA)
             .withSound(GeneratorsSounds.WIND_GENERATOR)
@@ -180,7 +181,7 @@ public class CompactBlockTypes {
     public static final Generator<TileEntityCompressedWindGenerator_x131072> WIND_GENERATOR_X131072 = Generator.GeneratorBuilder
             .createGenerator(() -> CompactTileEntityTypes.WIND_GENERATOR_X131072, CompactLang.DESCRIPTION_COMPRESSED_WIND_GENERATOR_x131072)
             .withGui(() -> CompactContainerTypes.WIND_GENERATOR_X131072)
-            .withEnergyConfig(()->MekanismGeneratorsConfig.storageConfig.windGenerator.get().multiply(131072))
+            .withEnergyConfig(() -> MekanismGeneratorsConfig.storageConfig.windGenerator.get().multiply(131072))
             .withCustomShape(mekanism.generators.common.content.blocktype.BlockShapes.WIND_GENERATOR)
             .with(AttributeCustomSelectionBox.JAVA)
             .withSound(GeneratorsSounds.WIND_GENERATOR)
@@ -195,7 +196,7 @@ public class CompactBlockTypes {
     public static final Generator<TileEntityCompressedWindGenerator_x532480> WIND_GENERATOR_X532480 = Generator.GeneratorBuilder
             .createGenerator(() -> CompactTileEntityTypes.WIND_GENERATOR_X532480, CompactLang.DESCRIPTION_COMPRESSED_WIND_GENERATOR_x532480)
             .withGui(() -> CompactContainerTypes.WIND_GENERATOR_X532480)
-            .withEnergyConfig(()->MekanismGeneratorsConfig.storageConfig.windGenerator.get().multiply(532480))
+            .withEnergyConfig(() -> MekanismGeneratorsConfig.storageConfig.windGenerator.get().multiply(532480))
             .withCustomShape(mekanism.generators.common.content.blocktype.BlockShapes.WIND_GENERATOR)
             .with(AttributeCustomSelectionBox.JAVA)
             .withSound(GeneratorsSounds.WIND_GENERATOR)

@@ -6,13 +6,13 @@
     "cba"
   ],
   "key": {
-    "a":{
+    "a": {
       "item": "mekanism:enriched_redstone"
     },
     "b": {
       "item": "compactmekanismmachines:compressed_wind_generator_x8"
     },
-    "c":{
+    "c": {
       "item": "mekanism:advanced_control_circuit"
     },
     "d": {

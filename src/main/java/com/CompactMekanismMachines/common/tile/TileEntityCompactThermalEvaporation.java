@@ -69,7 +69,7 @@ public class TileEntityCompactThermalEvaporation extends TileEntityConfigurableM
     private final BooleanSupplier recheckAllRecipeErrors;
 
 
-    public TileEntityCompactThermalEvaporation(BlockPos pos, BlockState state){
+    public TileEntityCompactThermalEvaporation(BlockPos pos, BlockState state) {
         super(CompactBlocks.COMPACT_THERMAL_EVAPORATION, pos, state);
         recipeCacheLookupMonitor = new RecipeCacheLookupMonitor<>(this);
         inputHandler = InputHelper.getInputHandler(inputTank, CachedRecipe.OperationTracker.RecipeError.NOT_ENOUGH_INPUT);
@@ -84,19 +84,20 @@ public class TileEntityCompactThermalEvaporation extends TileEntityConfigurableM
 
         configComponent = new TileComponentConfig(this, TransmissionType.FLUID);
         ConfigInfo fluidConfig = configComponent.getConfig(TransmissionType.FLUID);
-        if (fluidConfig !=null){
-            fluidConfig.addSlotInfo(DataType.INPUT, new FluidSlotInfo(true,false,inputTank));
-            fluidConfig.addSlotInfo(DataType.OUTPUT, new FluidSlotInfo(false,true,outputTank));
-            fluidConfig.setDataType(DataType.INPUT,RelativeSide.BOTTOM);
-            fluidConfig.setDataType(DataType.OUTPUT,RelativeSide.TOP);
+        if (fluidConfig != null) {
+            fluidConfig.addSlotInfo(DataType.INPUT, new FluidSlotInfo(true, false, inputTank));
+            fluidConfig.addSlotInfo(DataType.OUTPUT, new FluidSlotInfo(false, true, outputTank));
+            fluidConfig.setDataType(DataType.INPUT, RelativeSide.BOTTOM);
+            fluidConfig.setDataType(DataType.OUTPUT, RelativeSide.TOP);
         }
-        ejectorComponent = new TileComponentEjector(this,()->Long.MAX_VALUE,()->Integer.MAX_VALUE,()-> FloatingLong.create(Long.MAX_VALUE));
-        ejectorComponent.setOutputData(configComponent,TransmissionType.FLUID).setCanEject(type -> MekanismUtils.canFunction(this));
+        ejectorComponent = new TileComponentEjector(this, () -> Long.MAX_VALUE, () -> Integer.MAX_VALUE, () -> FloatingLong.create(Long.MAX_VALUE));
+        ejectorComponent.setOutputData(configComponent, TransmissionType.FLUID).setCanEject(type -> MekanismUtils.canFunction(this));
     }
+
     @NotNull
     @Override
-    public  IFluidTankHolder getInitialFluidTanks(IContentsListener listener){
-        FluidTankHelper builder = FluidTankHelper.forSideWithConfig(this::getDirection,this::getConfig);
+    public IFluidTankHolder getInitialFluidTanks(IContentsListener listener) {
+        FluidTankHelper builder = FluidTankHelper.forSideWithConfig(this::getDirection, this::getConfig);
         builder.addTank(inputTank = new FluidTank(() -> 1800000, ConstantPredicates.internalOnly(), ConstantPredicates.alwaysTrueBi(), this::containsRecipe, createSaveAndComparator()));
         builder.addTank(outputTank = new FluidTank(() -> 1800000, ConstantPredicates.alwaysTrueBi(), ConstantPredicates.internalOnly(), (fluidStack -> true), this));
         return builder.build();
@@ -104,20 +105,20 @@ public class TileEntityCompactThermalEvaporation extends TileEntityConfigurableM
 
     @NotNull
     @Override
-    public IHeatCapacitorHolder getInitialHeatCapacitors(IContentsListener listener, CachedAmbientTemperature ambientTemperature){
+    public IHeatCapacitorHolder getInitialHeatCapacitors(IContentsListener listener, CachedAmbientTemperature ambientTemperature) {
         HeatCapacitorHelper builder = HeatCapacitorHelper.forSide(this::getDirection);
-        builder.addCapacitor(heatCapacitor = VariableHeatCapacitor.create(MekanismConfig.general.evaporationHeatCapacity.get() * 3, () -> 300D, this), RelativeSide.TOP,RelativeSide.BOTTOM,RelativeSide.LEFT, RelativeSide.RIGHT, RelativeSide.BACK,RelativeSide.FRONT);
+        builder.addCapacitor(heatCapacitor = VariableHeatCapacitor.create(MekanismConfig.general.evaporationHeatCapacity.get() * 3, () -> 300D, this), RelativeSide.TOP, RelativeSide.BOTTOM, RelativeSide.LEFT, RelativeSide.RIGHT, RelativeSide.BACK, RelativeSide.FRONT);
         return builder.build();
     }
 
 
-    private static class FluidTank extends VariableCapacityFluidTank{
+    private static class FluidTank extends VariableCapacityFluidTank {
         protected FluidTank(@NotNull IntSupplier capacity,
                             BiPredicate<FluidStack, AutomationType> canExtract,
                             BiPredicate<FluidStack, AutomationType> canInsert,
                             Predicate<FluidStack> validator,
-                            @Nullable mekanism. api. IContentsListener listener){
-            super(capacity,canExtract,canInsert,validator,listener);
+                            @Nullable mekanism.api.IContentsListener listener) {
+            super(capacity, canExtract, canInsert, validator, listener);
         }
     }
 
@@ -126,6 +127,7 @@ public class TileEntityCompactThermalEvaporation extends TileEntityConfigurableM
             CachedRecipe.OperationTracker.RecipeError.NOT_ENOUGH_OUTPUT_SPACE,
             CachedRecipe.OperationTracker.RecipeError.INPUT_DOESNT_PRODUCE_OUTPUT
     );
+
     protected IContentsListener createSaveAndComparator() {
         return () -> {
             recipeCacheLookupMonitor.onContentsChanged();
@@ -134,6 +136,7 @@ public class TileEntityCompactThermalEvaporation extends TileEntityConfigurableM
             }
         };
     }
+
     @ContainerSync
     @WrappingComputerMethod(wrapper = SpecialComputerMethodWrapper.ComputerFluidTankWrapper.class, methodNames = {"getInput", "getInputCapacity", "getInputNeeded", "getInputFilledPercentage"}, docPlaceholder = "input tank")
     public BasicFluidTank inputTank;
@@ -158,15 +161,16 @@ public class TileEntityCompactThermalEvaporation extends TileEntityConfigurableM
     public double lastGain;
     @ContainerSync
     public VariableHeatCapacitor heatCapacitor;
+
     @Override
-    public void onUpdateServer(){
+    public void onUpdateServer() {
         super.onUpdateServer();
         lastEnvironmentLoss = simulateEnvironment();
         // update temperature
         updateHeatCapacitors(null);
         //After we update the heat capacitors, update our temperature multiplier
         // Note: We use the ambient temperature without taking our biome into account as we want to have a consistent multiplier
-        tempMultiplier = (Math.min(MAX_MULTIPLIER_TEMP, getTemperature()) - HeatAPI.AMBIENT_TEMP) * MekanismConfig.general.evaporationTempMultiplier.get()*((double) CompactMekanismMachinesConfig.machines.evaporationheight.get()/18);
+        tempMultiplier = (Math.min(MAX_MULTIPLIER_TEMP, getTemperature()) - HeatAPI.AMBIENT_TEMP) * MekanismConfig.general.evaporationTempMultiplier.get() * ((double) CompactMekanismMachinesConfig.machines.evaporationheight.get() / 18);
         inputOutputSlot.drainTank(outputOutputSlot);
         inputInputSlot.fillTank(outputInputSlot);
         setActive(recipeCacheLookupMonitor.updateAndProcess());
@@ -185,6 +189,7 @@ public class TileEntityCompactThermalEvaporation extends TileEntityConfigurableM
     public @Nullable FluidToFluidRecipe getRecipe(int cacheIndex) {
         return findFirstRecipe(inputHandler);
     }
+
     @ComputerMethod
     public double getTemperature() {
         return heatCapacitor.getTemperature();

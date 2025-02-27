@@ -41,12 +41,13 @@ public class GuiCompactFissionReactor extends GuiConfigurableTile<TileEntityComp
     @Override
     protected void addGuiElements() {
         super.addGuiElements();
-        addRenderableWidget(new GuiGasGauge(  () -> tile.heatedCoolantTank,()->tile.getGasTanks(null),  GaugeType.STANDARD,this,122,13));
-        addRenderableWidget(new GuiGasGauge(  () -> tile.wasteTank        ,()->tile.getGasTanks(null),  GaugeType.STANDARD,this, 100,13));
-        addRenderableWidget(new GuiGasGauge(  () -> tile.fuelTank         ,()->tile.getGasTanks(null),  GaugeType.STANDARD,this, 45,13));
-        addRenderableWidget(new GuiFluidGauge(() -> tile.coolantFluidTank ,()->tile.getFluidTanks(null),GaugeType.STANDARD,this, 23,13));
-        addRenderableWidget(new GuiGasGauge(  () -> tile.coolantGasTank   ,()->tile.getGasTanks(null),  GaugeType.STANDARD,this, 5,13));
-        addRenderableWidget(new GuiHeatTab( this,  ()->{ Component enviroment = MekanismUtils.getTemperatureDisplay(tile.heatCapacitor.getTemperature(), UnitDisplayUtils.TemperatureUnit.KELVIN,false);
+        addRenderableWidget(new GuiGasGauge(() -> tile.heatedCoolantTank, () -> tile.getGasTanks(null), GaugeType.STANDARD, this, 122, 13));
+        addRenderableWidget(new GuiGasGauge(() -> tile.wasteTank, () -> tile.getGasTanks(null), GaugeType.STANDARD, this, 100, 13));
+        addRenderableWidget(new GuiGasGauge(() -> tile.fuelTank, () -> tile.getGasTanks(null), GaugeType.STANDARD, this, 45, 13));
+        addRenderableWidget(new GuiFluidGauge(() -> tile.coolantFluidTank, () -> tile.getFluidTanks(null), GaugeType.STANDARD, this, 23, 13));
+        addRenderableWidget(new GuiGasGauge(() -> tile.coolantGasTank, () -> tile.getGasTanks(null), GaugeType.STANDARD, this, 5, 13));
+        addRenderableWidget(new GuiHeatTab(this, () -> {
+            Component enviroment = MekanismUtils.getTemperatureDisplay(tile.heatCapacitor.getTemperature(), UnitDisplayUtils.TemperatureUnit.KELVIN, false);
             return Collections.singletonList(MekanismLang.TEMPERATURE.translate(enviroment));
         }));
     }

@@ -40,8 +40,8 @@ public class GuiCompactThermalEvaporation extends GuiConfigurableTile<TileEntity
         super.addGuiElements();
         addRenderableWidget(new GuiInnerScreen(this, 48, 19, 80, 40, () ->
                 List.of(MekanismLang.MULTIBLOCK_FORMED.translate(), MekanismLang.EVAPORATION_HEIGHT.translate(18),
-                MekanismLang.TEMPERATURE.translate(MekanismUtils.getTemperatureDisplay(tile.getTemperature(), UnitDisplayUtils.TemperatureUnit.KELVIN, true)),
-                MekanismLang.FLUID_PRODUCTION.translate(Math.round(tile.lastGain * 100D) / 100D))).spacing(1));
+                        MekanismLang.TEMPERATURE.translate(MekanismUtils.getTemperatureDisplay(tile.getTemperature(), UnitDisplayUtils.TemperatureUnit.KELVIN, true)),
+                        MekanismLang.FLUID_PRODUCTION.translate(Math.round(tile.lastGain * 100D) / 100D))).spacing(1));
         addRenderableWidget(new GuiDownArrow(this, 32, 39));
         addRenderableWidget(new GuiDownArrow(this, 136, 39));
         addRenderableWidget(new GuiHorizontalRateBar(this, new GuiBar.IBarInfoHandler() {

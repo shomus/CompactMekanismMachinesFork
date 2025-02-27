@@ -6,13 +6,13 @@
     "cba"
   ],
   "key": {
-    "a":{
+    "a": {
       "item": "mekanism:energy_tablet"
     },
     "b": {
       "item": "compactmekanismmachines:compressed_wind_generator_x2"
     },
-    "c":{
+    "c": {
       "item": "mekanism:basic_control_circuit"
     },
     "d": {

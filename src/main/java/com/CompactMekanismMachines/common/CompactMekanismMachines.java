@@ -23,6 +23,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.slf4j.Logger;
+
 @Mod(CompactMekanismMachines.MODID)
 public class CompactMekanismMachines {
 
@@ -38,8 +39,7 @@ public class CompactMekanismMachines {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
 
 
-    public CompactMekanismMachines()
-    {
+    public CompactMekanismMachines() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         // Register the commonSetup method for modloading
@@ -59,11 +59,12 @@ public class CompactMekanismMachines {
         // Register our mod's ForgeConfigSpec so that Forge can create and load the config file for us
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.SPEC);
     }
+
     public static ResourceLocation rl(String path) {
         return new ResourceLocation(CompactMekanismMachines.MODID, path);
     }
-    private void commonSetup(final FMLCommonSetupEvent event)
-    {
+
+    private void commonSetup(final FMLCommonSetupEvent event) {
         // Some common setup code
         LOGGER.info("HELLO FROM COMMON SETUP");
 

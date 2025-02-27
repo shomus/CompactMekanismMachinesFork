@@ -12,7 +12,7 @@
     "b": {
       "item": "mekanismgenerators:electromagnetic_coil"
     },
-    "c":{
+    "c": {
       "item": "mekanismgenerators:turbine_rotor"
     },
     "d": {
@@ -24,7 +24,7 @@
     "f": {
       "item": "mekanismgenerators:turbine_blade"
     },
-    "g":{
+    "g": {
       "item": "mekanismgenerators:rotational_complex"
     }
   },

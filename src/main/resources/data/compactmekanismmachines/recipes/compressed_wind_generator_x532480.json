@@ -6,13 +6,13 @@
     "cda"
   ],
   "key": {
-    "a":{
+    "a": {
       "item": "mekanism:robit"
     },
     "b": {
       "item": "compactmekanismmachines:compressed_wind_generator_x8192"
     },
-    "c":{
+    "c": {
       "item": "mekanism:qio_drive_supermassive"
     },
     "d": {

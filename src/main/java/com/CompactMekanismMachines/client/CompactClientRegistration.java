@@ -20,8 +20,11 @@ import net.minecraftforge.registries.RegisterEvent;
 
 @Mod.EventBusSubscriber(modid = CompactMekanismMachines.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class CompactClientRegistration {
-    private CompactClientRegistration(){}
+    private CompactClientRegistration() {
+    }
+
     ;
+
     @SubscribeEvent
     public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerBlockEntityRenderer(CompactTileEntityTypes.WIND_GENERATOR_X2.get(), RenderCompressedWindGenerator_x2::new);
@@ -36,6 +39,7 @@ public class CompactClientRegistration {
         event.registerBlockEntityRenderer(CompactTileEntityTypes.WIND_GENERATOR_X532480.get(), RenderCompressedWindGenerator_x532480::new);
 
     }
+
     @SubscribeEvent(priority = EventPriority.LOW)
     public static void registerContainers(RegisterEvent event) {
         event.register(Registries.MENU, helper -> {
@@ -51,7 +55,7 @@ public class CompactClientRegistration {
             ClientRegistrationUtil.registerScreen(CompactContainerTypes.WIND_GENERATOR_X512, GuiCompressedWindGenerator_x512::new);
             ClientRegistrationUtil.registerScreen(CompactContainerTypes.WIND_GENERATOR_X2048, GuiCompressedWindGenerator_x2048::new);
             ClientRegistrationUtil.registerScreen(CompactContainerTypes.WIND_GENERATOR_X8192, GuiCompressedWindGenerator_x8192::new);
-            ClientRegistrationUtil.registerScreen(CompactContainerTypes.WIND_GENERATOR_X32768,GuiCompressedWindGenerator_x32768::new);
+            ClientRegistrationUtil.registerScreen(CompactContainerTypes.WIND_GENERATOR_X32768, GuiCompressedWindGenerator_x32768::new);
             ClientRegistrationUtil.registerScreen(CompactContainerTypes.WIND_GENERATOR_X131072, GuiCompressedWindGenerator_x131072::new);
             ClientRegistrationUtil.registerScreen(CompactContainerTypes.WIND_GENERATOR_X532480, GuiCompressedWindGenerator_x532480::new);
 

@@ -80,52 +80,53 @@ public class TileEntityCompactIndustrialTurbine extends TileEntityConfigurableMa
 
     public TileEntityCompactIndustrialTurbine(BlockPos pos, BlockState state) {
         super(CompactBlocks.COMPACT_INDUSTRIAL_TURBINE, pos, state);
-        configComponent = new TileComponentConfig(this, TransmissionType.GAS,TransmissionType.FLUID,TransmissionType.ENERGY);
+        configComponent = new TileComponentConfig(this, TransmissionType.GAS, TransmissionType.FLUID, TransmissionType.ENERGY);
         ConfigInfo gasConfig = configComponent.getConfig(TransmissionType.GAS);
-        if (gasConfig !=null){
-            gasConfig.addSlotInfo(DataType.INPUT, new ChemicalSlotInfo.GasSlotInfo(true,false, gasTank));
-            gasConfig.setDataType(DataType.INPUT,RelativeSide.FRONT);
+        if (gasConfig != null) {
+            gasConfig.addSlotInfo(DataType.INPUT, new ChemicalSlotInfo.GasSlotInfo(true, false, gasTank));
+            gasConfig.setDataType(DataType.INPUT, RelativeSide.FRONT);
         }
         ConfigInfo fluidConfig = configComponent.getConfig(TransmissionType.FLUID);
-        if (fluidConfig!=null){
-            fluidConfig.addSlotInfo(DataType.OUTPUT,new FluidSlotInfo(false,true,ventTank));
-            fluidConfig.setDataType(DataType.OUTPUT,RelativeSide.TOP);
+        if (fluidConfig != null) {
+            fluidConfig.addSlotInfo(DataType.OUTPUT, new FluidSlotInfo(false, true, ventTank));
+            fluidConfig.setDataType(DataType.OUTPUT, RelativeSide.TOP);
         }
         ConfigInfo energyConfig = configComponent.getConfig(TransmissionType.ENERGY);
-        if (energyConfig!=null){
-            energyConfig.addSlotInfo(DataType.OUTPUT,new EnergySlotInfo(false,true,energyContainer));
-            energyConfig.setDataType(DataType.OUTPUT,RelativeSide.BOTTOM);
+        if (energyConfig != null) {
+            energyConfig.addSlotInfo(DataType.OUTPUT, new EnergySlotInfo(false, true, energyContainer));
+            energyConfig.setDataType(DataType.OUTPUT, RelativeSide.BOTTOM);
         }
-        ejectorComponent = new TileComponentEjector(this, ()->Long.MAX_VALUE,()->Integer.MAX_VALUE,()-> FloatingLong.create(Long.MAX_VALUE));
-        ejectorComponent.setOutputData(configComponent, TransmissionType.GAS,TransmissionType.FLUID,TransmissionType.ENERGY)
+        ejectorComponent = new TileComponentEjector(this, () -> Long.MAX_VALUE, () -> Integer.MAX_VALUE, () -> FloatingLong.create(Long.MAX_VALUE));
+        ejectorComponent.setOutputData(configComponent, TransmissionType.GAS, TransmissionType.FLUID, TransmissionType.ENERGY)
                 .setCanEject(type -> MekanismUtils.canFunction(this));
     }
 
     @NotNull
     @Override
     public IChemicalTankHolder<Gas, GasStack, IGasTank> getInitialGasTanks(IContentsListener listener) {
-        ChemicalTankHelper<Gas, GasStack, IGasTank> builder = ChemicalTankHelper.forSideGasWithConfig(this::getDirection,this::getConfig);
+        ChemicalTankHelper<Gas, GasStack, IGasTank> builder = ChemicalTankHelper.forSideGasWithConfig(this::getDirection, this::getConfig);
         builder.addTank(gasTank = new GasTank(listener));
         return builder.build();
     }
 
     @NotNull
     @Override
-    public IFluidTankHolder getInitialFluidTanks(IContentsListener listener){
-        FluidTankHelper builder = FluidTankHelper.forSideWithConfig(this::getDirection,this::getConfig);
+    public IFluidTankHolder getInitialFluidTanks(IContentsListener listener) {
+        FluidTankHelper builder = FluidTankHelper.forSideWithConfig(this::getDirection, this::getConfig);
         builder.addTank(ventTank = new FluidTank(listener));
         return builder.build();
     }
+
     @NotNull
     @Override
     protected IEnergyContainerHolder getInitialEnergyContainers(IContentsListener listener) {
         EnergyContainerHelper builder = EnergyContainerHelper.forSide(this::getDirection);
-        builder.addContainer(energyContainer = BasicEnergyContainer.output(MachineEnergyContainer.validateBlock(this).getStorage(), listener),getEnergySides());
+        builder.addContainer(energyContainer = BasicEnergyContainer.output(MachineEnergyContainer.validateBlock(this).getStorage(), listener), getEnergySides());
         return builder.build();
     }
 
     protected RelativeSide[] getEnergySides() {
-        return new RelativeSide[]{RelativeSide.FRONT,RelativeSide.BACK,RelativeSide.BOTTOM,RelativeSide.TOP,RelativeSide.RIGHT,RelativeSide.LEFT};
+        return new RelativeSide[]{RelativeSide.FRONT, RelativeSide.BACK, RelativeSide.BOTTOM, RelativeSide.TOP, RelativeSide.RIGHT, RelativeSide.LEFT};
     }
 
     @Override
@@ -152,12 +153,12 @@ public class TileEntityCompactIndustrialTurbine extends TileEntityConfigurableMa
                     double rate = lowerVolume * (CompactMekanismMachinesConfig.machines.turbinevertualdispersers.get() * MekanismGeneratorsConfig.generators.turbineDisperserGasFlow.get());
                     rate = Math.min(rate, CompactMekanismMachinesConfig.machines.turbinevertualvents.get() * MekanismGeneratorsConfig.generators.turbineVentGasFlow.get());
                     double proportion = stored / (double) getSteamCapacity();
-                    rate = Math.min(Math.min(stored, rate), energyNeeded.divide(energyMultiplier).doubleValue()) * proportion*100000;
+                    rate = Math.min(Math.min(stored, rate), energyNeeded.divide(energyMultiplier).doubleValue()) * proportion;
                     clientFlow = MathUtils.clampToLong(rate);
                     if (clientFlow > 0) {
                         energyContainer.insert(energyMultiplier.multiply(rate), Action.EXECUTE, AutomationType.INTERNAL);
                         gasTank.shrinkStack(clientFlow, Action.EXECUTE);
-                        ventTank.setStack(new FluidStack(Fluids.WATER, Math.min(MathUtils.clampToInt(rate), CompactMekanismMachinesConfig.machines.turbinevertualcondensors.get()* MekanismGeneratorsConfig.generators.condenserRate.get())));
+                        ventTank.setStack(new FluidStack(Fluids.WATER, Math.min(MathUtils.clampToInt(rate), CompactMekanismMachinesConfig.machines.turbinevertualcondensors.get() * MekanismGeneratorsConfig.generators.condenserRate.get())));
                     }
                 }
             } else {
@@ -188,16 +189,16 @@ public class TileEntityCompactIndustrialTurbine extends TileEntityConfigurableMa
     private class GasTank extends VariableCapacityGasTank {
 
         protected GasTank(@Nullable IContentsListener listener) {
-            super(CompactMekanismMachinesConfig.machines.turbinegascapacity,ChemicalTankBuilder.GAS.notExternal, ChemicalTankBuilder.GAS.alwaysTrueBi,
-                    gas -> gas == MekanismGases.STEAM.getChemical(),null,listener);
+            super(CompactMekanismMachinesConfig.machines.turbinegascapacity, ChemicalTankBuilder.GAS.notExternal, ChemicalTankBuilder.GAS.alwaysTrueBi,
+                    gas -> gas == MekanismGases.STEAM.getChemical(), null, listener);
         }
 
     }
 
-    private  class FluidTank extends VariableCapacityFluidTank{
-        protected FluidTank(@Nullable IContentsListener listener){
-            super(CompactMekanismMachinesConfig.machines.turbinefluidcapacity, ConstantPredicates.alwaysTrueBi(),ConstantPredicates.notExternal(),
-                    fluid -> MekanismTags.Fluids.WATER_LOOKUP.contains(fluid.getFluid()),null);
+    private class FluidTank extends VariableCapacityFluidTank {
+        protected FluidTank(@Nullable IContentsListener listener) {
+            super(CompactMekanismMachinesConfig.machines.turbinefluidcapacity, ConstantPredicates.alwaysTrueBi(), ConstantPredicates.notExternal(),
+                    fluid -> MekanismTags.Fluids.WATER_LOOKUP.contains(fluid.getFluid()), null);
         }
     }
 

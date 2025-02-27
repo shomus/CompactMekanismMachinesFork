@@ -6,13 +6,13 @@
     "cba"
   ],
   "key": {
-    "a":{
+    "a": {
       "item": "mekanism:enriched_refined_obsidian"
     },
     "b": {
       "item": "compactmekanismmachines:compressed_wind_generator_x128"
     },
-    "c":{
+    "c": {
       "item": "mekanism:ultimate_control_circuit"
     },
     "d": {

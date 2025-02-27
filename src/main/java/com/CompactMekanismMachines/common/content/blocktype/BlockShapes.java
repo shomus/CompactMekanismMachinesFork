@@ -13,6 +13,7 @@ public final class BlockShapes {
     private static VoxelShape box(double minX, double minY, double minZ, double maxX, double maxY, double maxZ) {
         return Block.box(minX, minY, minZ, maxX, maxY, maxZ);
     }
+
     public static final VoxelShape[] COMPACT_FISSION_REACTOR = new VoxelShape[EnumUtils.HORIZONTAL_DIRECTIONS.length];
 
     static {

@@ -39,6 +39,7 @@ public class GuiCompactIndustrialTurbine extends GuiConfigurableTile<TileEntityC
         titleLabelY = 5;
         dynamicSlots = true;
     }
+
     @Override
     protected void addGuiElements() {
         super.addGuiElements();

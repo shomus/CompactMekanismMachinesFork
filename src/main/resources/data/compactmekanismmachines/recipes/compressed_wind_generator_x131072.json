@@ -6,13 +6,13 @@
     "aba"
   ],
   "key": {
-    "a":{
+    "a": {
       "item": "mekanism:pellet_polonium"
     },
     "b": {
       "item": "compactmekanismmachines:compressed_wind_generator_x32768"
     },
-    "d":{
+    "d": {
       "item": "mekanism:dictionary"
     }
   },

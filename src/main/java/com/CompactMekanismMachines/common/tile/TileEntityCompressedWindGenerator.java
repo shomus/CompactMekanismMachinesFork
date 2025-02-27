@@ -41,8 +41,8 @@ public abstract class TileEntityCompressedWindGenerator<TILE extends TileEntityC
     @WrappingComputerMethod(wrapper = SpecialComputerMethodWrapper.ComputerIInventorySlotWrapper.class, methodNames = "getEnergyItem", docPlaceholder = "energy item slot")
     EnergyInventorySlot energySlot;
 
-    public TileEntityCompressedWindGenerator(BlockPos pos, BlockState state, Long multiply_,BlockRegistryObject<BlockTile.BlockTileModel<TILE, Generator<TILE>>, ItemBlockWindGenerator> block) {
-        super(block, pos, state, ()->MekanismGeneratorsConfig.generators.windGenerationMax.get().multiply(multiply_));
+    public TileEntityCompressedWindGenerator(BlockPos pos, BlockState state, Long multiply_, BlockRegistryObject<BlockTile.BlockTileModel<TILE, Generator<TILE>>, ItemBlockWindGenerator> block) {
+        super(block, pos, state, () -> MekanismGeneratorsConfig.generators.windGenerationMax.get().multiply(multiply_));
         this.multiply = multiply_;
     }
 
@@ -161,8 +161,9 @@ public abstract class TileEntityCompressedWindGenerator<TILE extends TileEntityC
     FloatingLong getProductionRate() {
         return getActive() ? MekanismGeneratorsConfig.generators.windGenerationMin.get().multiply(getCurrentMultiplier()) : FloatingLong.ZERO;
     }
+
     //End methods IComputerTile
-    public long getMultiply(){
+    public long getMultiply() {
         return this.multiply;
     }
 }

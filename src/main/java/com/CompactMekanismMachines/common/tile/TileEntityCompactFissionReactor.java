@@ -79,7 +79,7 @@ public class TileEntityCompactFissionReactor extends TileEntityConfigurableMachi
     private FloatingLong generationRate = FloatingLong.ZERO;
     private double biomeAmbientTemp;
     private double gasUsedLastTick;
-    public  double partialWaste;
+    public double partialWaste;
     public long lastBoilRate = 0;
     private static final double INVERSE_INSULATION_COEFFICIENT = 10_000;
     private static final double INVERSE_CONDUCTION_COEFFICIENT = 10;
@@ -93,32 +93,32 @@ public class TileEntityCompactFissionReactor extends TileEntityConfigurableMachi
     public TileEntityCompactFissionReactor(BlockPos pos, BlockState state) {
         super(CompactBlocks.COMPACT_FISSION_REACTOR, pos, state);
         biomeAmbientTemp = HeatAPI.getAmbientTemp(this.getLevel(), this.getTilePos());
-        configComponent = new TileComponentConfig(this, TransmissionType.GAS,TransmissionType.FLUID);
+        configComponent = new TileComponentConfig(this, TransmissionType.GAS, TransmissionType.FLUID);
 
         gasConfig = configComponent.getConfig(TransmissionType.GAS);
-        if (gasConfig !=null){
-            gasConfig.addSlotInfo(DataType.INPUT_1, new ChemicalSlotInfo.GasSlotInfo(true,false,fuelTank));
-            gasConfig.addSlotInfo(DataType.INPUT_2, new ChemicalSlotInfo.GasSlotInfo(true,false,coolantGasTank));
-            gasConfig.addSlotInfo(DataType.OUTPUT_1,new ChemicalSlotInfo.GasSlotInfo(false,true,wasteTank));
-            gasConfig.addSlotInfo(DataType.OUTPUT_2,new ChemicalSlotInfo.GasSlotInfo(false,true,heatedCoolantTank));
-            gasConfig.setDataType(DataType.INPUT_1,RelativeSide.FRONT);
-            gasConfig.setDataType(DataType.INPUT_2,RelativeSide.TOP);
-            gasConfig.setDataType(DataType.OUTPUT_1,RelativeSide.BOTTOM);
-            gasConfig.setDataType(DataType.OUTPUT_2,RelativeSide.BACK);
+        if (gasConfig != null) {
+            gasConfig.addSlotInfo(DataType.INPUT_1, new ChemicalSlotInfo.GasSlotInfo(true, false, fuelTank));
+            gasConfig.addSlotInfo(DataType.INPUT_2, new ChemicalSlotInfo.GasSlotInfo(true, false, coolantGasTank));
+            gasConfig.addSlotInfo(DataType.OUTPUT_1, new ChemicalSlotInfo.GasSlotInfo(false, true, wasteTank));
+            gasConfig.addSlotInfo(DataType.OUTPUT_2, new ChemicalSlotInfo.GasSlotInfo(false, true, heatedCoolantTank));
+            gasConfig.setDataType(DataType.INPUT_1, RelativeSide.FRONT);
+            gasConfig.setDataType(DataType.INPUT_2, RelativeSide.TOP);
+            gasConfig.setDataType(DataType.OUTPUT_1, RelativeSide.BOTTOM);
+            gasConfig.setDataType(DataType.OUTPUT_2, RelativeSide.BACK);
         }
         ConfigInfo fluidConfig = configComponent.getConfig(TransmissionType.FLUID);
-        if (fluidConfig!=null){
-            fluidConfig.addSlotInfo(DataType.INPUT,new FluidSlotInfo(true,false,coolantFluidTank));
+        if (fluidConfig != null) {
+            fluidConfig.addSlotInfo(DataType.INPUT, new FluidSlotInfo(true, false, coolantFluidTank));
         }
-        ejectorComponent = new TileComponentEjector(this, ()->Long.MAX_VALUE,()->Integer.MAX_VALUE,()-> FloatingLong.create(Long.MAX_VALUE));
-        ejectorComponent.setOutputData(configComponent, TransmissionType.GAS,TransmissionType.FLUID)
+        ejectorComponent = new TileComponentEjector(this, () -> Long.MAX_VALUE, () -> Integer.MAX_VALUE, () -> FloatingLong.create(Long.MAX_VALUE));
+        ejectorComponent.setOutputData(configComponent, TransmissionType.GAS, TransmissionType.FLUID)
                 .setCanEject(type -> MekanismUtils.canFunction(this));
     }
 
     @NotNull
     @Override
     public IChemicalTankHolder<Gas, GasStack, IGasTank> getInitialGasTanks(IContentsListener listener) {
-        ChemicalTankHelper<Gas, GasStack, IGasTank> builder = ChemicalTankHelper.forSideGasWithConfig(this::getDirection,this::getConfig);
+        ChemicalTankHelper<Gas, GasStack, IGasTank> builder = ChemicalTankHelper.forSideGasWithConfig(this::getDirection, this::getConfig);
         builder.addTank(fuelTank = new FuelTank(listener));
         builder.addTank(coolantGasTank = new CoolantGasTank(listener));
         builder.addTank(wasteTank = new WasteTank(listener));
@@ -128,17 +128,17 @@ public class TileEntityCompactFissionReactor extends TileEntityConfigurableMachi
 
     @NotNull
     @Override
-    public IFluidTankHolder getInitialFluidTanks(IContentsListener listener){
-        FluidTankHelper builder = FluidTankHelper.forSideWithConfig(this::getDirection,this::getConfig);
+    public IFluidTankHolder getInitialFluidTanks(IContentsListener listener) {
+        FluidTankHelper builder = FluidTankHelper.forSideWithConfig(this::getDirection, this::getConfig);
         builder.addTank(coolantFluidTank = new CoolantFluidTank(listener));
         return builder.build();
     }
 
     @NotNull
     @Override
-    public IHeatCapacitorHolder getInitialHeatCapacitors(IContentsListener listener, CachedAmbientTemperature ambientTemperature){
+    public IHeatCapacitorHolder getInitialHeatCapacitors(IContentsListener listener, CachedAmbientTemperature ambientTemperature) {
         HeatCapacitorHelper builder = HeatCapacitorHelper.forSide(this::getDirection);
-        builder.addCapacitor(heatCapacitor = new HeatTank(listener),RelativeSide.TOP,RelativeSide.BOTTOM,RelativeSide.LEFT, RelativeSide.RIGHT, RelativeSide.BACK,RelativeSide.FRONT);
+        builder.addCapacitor(heatCapacitor = new HeatTank(listener), RelativeSide.TOP, RelativeSide.BOTTOM, RelativeSide.LEFT, RelativeSide.RIGHT, RelativeSide.BACK, RelativeSide.FRONT);
         return builder.build();
     }
 
@@ -169,12 +169,12 @@ public class TileEntityCompactFissionReactor extends TileEntityConfigurableMachi
             }
 
             heatCapacitor.handleHeat(toUse * MekanismGeneratorsConfig.generators.energyPerFissionFuel.get().doubleValue());
-            if (heatCapacitor.getTemperature()>1600){
-                heatCapacitor.setHeat(heatCapacitor.getHeatCapacity()*1600);
+            if (heatCapacitor.getTemperature() > 1600) {
+                heatCapacitor.setHeat(heatCapacitor.getHeatCapacity() * 1600);
             }
             double temp = heatCapacitor.getTemperature();
             double heat = toUse * (temp - HeatUtils.BASE_BOIL_TEMP) * heatCapacitor.getHeatCapacity();
-            if (!coolantFluidTank.isEmpty()){
+            if (!coolantFluidTank.isEmpty()) {
                 double caseCoolantHeat = heat * waterConductivity;
                 lastBoilRate = clampCoolantHeated(HeatUtils.getSteamEnergyEfficiency() * caseCoolantHeat / HeatUtils.getWaterThermalEnthalpy(),
                         coolantFluidTank.getFluidAmount());
@@ -185,7 +185,7 @@ public class TileEntityCompactFissionReactor extends TileEntityConfigurableMachi
                     caseCoolantHeat = lastBoilRate * HeatUtils.getWaterThermalEnthalpy() / HeatUtils.getSteamEnergyEfficiency();
                     heatCapacitor.handleHeat(-caseCoolantHeat);
                 }
-            }   else if (!coolantGasTank.isEmpty()) {
+            } else if (!coolantGasTank.isEmpty()) {
                 coolantGasTank.getStack().ifAttributePresent(CooledCoolant.class, coolantType -> {
                     double caseCoolantHeat = heat * coolantType.getConductivity();
                     lastBoilRate = clampCoolantHeated(caseCoolantHeat / coolantType.getThermalEnthalpy(), coolantGasTank.getStored());
@@ -199,7 +199,7 @@ public class TileEntityCompactFissionReactor extends TileEntityConfigurableMachi
             }
             partialWaste += toUse;
             long newWaste = (long) Math.floor(partialWaste);
-            if (newWaste>0){
+            if (newWaste > 0) {
                 partialWaste %= 1;
                 GasStack wasteToAdd = MekanismGases.NUCLEAR_WASTE.getStack(newWaste);
 
@@ -240,6 +240,7 @@ public class TileEntityCompactFissionReactor extends TileEntityConfigurableMachi
         }
         return heatedLong;
     }
+
     public FloatingLong getGenerationRate() {
         return generationRate;
     }
@@ -299,11 +300,13 @@ public class TileEntityCompactFissionReactor extends TileEntityConfigurableMachi
         private void recheckOutput(@NotNull GasStack stack, boolean wasEmpty) {
         }
     }
-    private class CoolantGasTank extends VariableCapacityGasTank{
-        protected  CoolantGasTank(@Nullable IContentsListener listener){
-            super(CompactMekanismMachinesConfig.machines.cfrCoolantGasTankCapacity,ChemicalTankBuilder.GAS.notExternal,ChemicalTankBuilder.GAS.alwaysTrueBi,
-                    gas -> gas.has(CooledCoolant.class),null,listener);
+
+    private class CoolantGasTank extends VariableCapacityGasTank {
+        protected CoolantGasTank(@Nullable IContentsListener listener) {
+            super(CompactMekanismMachinesConfig.machines.cfrCoolantGasTankCapacity, ChemicalTankBuilder.GAS.notExternal, ChemicalTankBuilder.GAS.alwaysTrueBi,
+                    gas -> gas.has(CooledCoolant.class), null, listener);
         }
+
         @Override
         public void setStack(@NotNull GasStack stack) {
             boolean wasEmpty = isEmpty();
@@ -323,29 +326,29 @@ public class TileEntityCompactFissionReactor extends TileEntityConfigurableMachi
     }
 
     private class CoolantFluidTank extends VariableCapacityFluidTank {
-        protected  CoolantFluidTank(@Nullable IContentsListener listener){
-            super(CompactMekanismMachinesConfig.machines.cfrCoolantFluidTankCapacity,ConstantPredicates.notExternal(), ConstantPredicates.alwaysTrueBi(),
-                    fluid -> fluid.isFluidEqual(new FluidStack(Fluids.WATER,1)),listener);
+        protected CoolantFluidTank(@Nullable IContentsListener listener) {
+            super(CompactMekanismMachinesConfig.machines.cfrCoolantFluidTankCapacity, ConstantPredicates.notExternal(), ConstantPredicates.alwaysTrueBi(),
+                    fluid -> fluid.isFluidEqual(new FluidStack(Fluids.WATER, 1)), listener);
         }
     }
 
-    private  class HeatedCoolantTank extends VariableCapacityGasTank {
-        protected HeatedCoolantTank(@Nullable IContentsListener listener){
-            super(CompactMekanismMachinesConfig.machines.cfrHeatedCoolantTankCapacity,ConstantPredicates.alwaysTrueBi(),ConstantPredicates.internalOnly(),
-                    gas -> (gas.has(GasAttributes.HeatedCoolant.class)||gas.equals(MekanismGases.STEAM.get())),ChemicalAttributeValidator.ALWAYS_ALLOW,listener);
+    private class HeatedCoolantTank extends VariableCapacityGasTank {
+        protected HeatedCoolantTank(@Nullable IContentsListener listener) {
+            super(CompactMekanismMachinesConfig.machines.cfrHeatedCoolantTankCapacity, ConstantPredicates.alwaysTrueBi(), ConstantPredicates.internalOnly(),
+                    gas -> (gas.has(GasAttributes.HeatedCoolant.class) || gas.equals(MekanismGases.STEAM.get())), ChemicalAttributeValidator.ALWAYS_ALLOW, listener);
         }
     }
 
-    private  class  WasteTank extends VariableCapacityGasTank{
-        protected WasteTank(@Nullable IContentsListener listener){
-            super(CompactMekanismMachinesConfig.machines.cfrWasteTankCapacity,ChemicalTankBuilder.GAS.alwaysTrueBi,ChemicalTankBuilder.GAS.internalOnly,
-                    gas -> gas.equals(MekanismGases.NUCLEAR_WASTE.getChemical()), ChemicalAttributeValidator.ALWAYS_ALLOW,listener);
+    private class WasteTank extends VariableCapacityGasTank {
+        protected WasteTank(@Nullable IContentsListener listener) {
+            super(CompactMekanismMachinesConfig.machines.cfrWasteTankCapacity, ChemicalTankBuilder.GAS.alwaysTrueBi, ChemicalTankBuilder.GAS.internalOnly,
+                    gas -> gas.equals(MekanismGases.NUCLEAR_WASTE.getChemical()), ChemicalAttributeValidator.ALWAYS_ALLOW, listener);
         }
     }
 
-    public class HeatTank extends VariableHeatCapacitor{
-        protected HeatTank(@Nullable IContentsListener listener){
-            super(CompactMekanismMachinesConfig.machines.cfrHeatTankCpacity.get(),() -> INVERSE_CONDUCTION_COEFFICIENT, () -> INVERSE_INSULATION_COEFFICIENT, () -> biomeAmbientTemp, null);
+    public class HeatTank extends VariableHeatCapacitor {
+        protected HeatTank(@Nullable IContentsListener listener) {
+            super(CompactMekanismMachinesConfig.machines.cfrHeatTankCpacity.get(), () -> INVERSE_CONDUCTION_COEFFICIENT, () -> INVERSE_INSULATION_COEFFICIENT, () -> biomeAmbientTemp, null);
         }
     }
 

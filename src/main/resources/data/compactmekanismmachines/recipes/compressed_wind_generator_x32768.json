@@ -6,13 +6,13 @@
     "cba"
   ],
   "key": {
-    "a":{
+    "a": {
       "item": "mekanism:ultimate_induction_cell"
     },
     "b": {
       "item": "compactmekanismmachines:compressed_wind_generator_x8192"
     },
-    "d":{
+    "d": {
       "item": "mekanism:pellet_polonium"
     },
     "c": {

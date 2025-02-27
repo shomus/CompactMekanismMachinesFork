@@ -2,6 +2,7 @@ package com.CompactMekanismMachines.common.tile;
 
 import java.util.EnumSet;
 import java.util.Set;
+
 import mekanism.api.IContentsListener;
 import mekanism.api.RelativeSide;
 import mekanism.api.math.FloatingLong;
@@ -25,10 +26,10 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 
 /**
- MIT License
-
- Copyright (c) 2017-2024 Aidan C. Brady
- <a href="https://opensource.org/license/mit">...</a>
+ * MIT License
+ * <p>
+ * Copyright (c) 2017-2024 Aidan C. Brady
+ * <a href="https://opensource.org/license/mit">...</a>
  */
 public abstract class TileEntityGenerator extends TileEntityMekanism {
 
