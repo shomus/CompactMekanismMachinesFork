@@ -33,7 +33,7 @@ public class MachinesConfig extends BaseMekanismConfig {
         builder.comment("CompactFissionReactor Settings").push("compactfissionreactor");
         this.cfrFuelTankCapacity = CachedLongValue.wrap(this, builder.comment("The capacity in mB of the gas tank of fuel in the Compact Fission Reactor").defineInRange("tankCapacity", 5880000L, 1L, Long.MAX_VALUE));
         this.cfrCoolantGasTankCapacity = CachedLongValue.wrap(this, builder.comment("The capacity in mB of the gas coolant tank of fuel in the Compact Fission Reactor").defineInRange("GascoolanttankCapacity", 4096000000L, 1L, Long.MAX_VALUE));
-        this.cfrCoolantFluidTankCapacity = CachedIntValue.wrap(this, builder.comment("The capacity in mB of the fluid coolant tank of fuel in the Compact Fission Reactor").defineInRange("FluidcoolanttankCapacity", 4096000000, 1, Integer.MAX_VALUE));
+        this.cfrCoolantFluidTankCapacity = CachedIntValue.wrap(this, builder.comment("The capacity in mB of the fluid coolant tank of fuel in the Compact Fission Reactor").defineInRange("FluidcoolanttankCapacity", 2048000000, 1, Integer.MAX_VALUE));
         this.cfrHeatedCoolantTankCapacity = CachedLongValue.wrap(this, builder.comment("The capacity in mB of the heated coolant tank of fuel in the Compact Fission Reactor").defineInRange("HeatedcoolanttankCapacity", 40960000000L, 1L, Long.MAX_VALUE));
         this.cfrWasteTankCapacity = CachedLongValue.wrap(this, builder.comment("The capacity in mB of the waste tank of fuel in the Compact Fission Reactor").defineInRange("tankCapacity", 18000000L, 1L, Long.MAX_VALUE));
         this.cfrBurnRate = CachedLongValue.wrap(this, builder.comment("Max fuel cosume per tick of Compact Fission Reactor").defineInRange("burnrate", 1920, 1, Long.MAX_VALUE));
