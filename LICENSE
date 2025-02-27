@@ -1,6 +1,12 @@
 MIT License
 
-Copyright (c) 2024 nekorobi_0
+This software is a modified version of the original software licensed under the MIT License. 
+Original copyright (c) 2024 nekorobi_0. All rights reserved.
+
+This software includes modifications made by shomus to the original software licensed under the MIT License. 
+Modified portions of this software are:
+  Balancing for regular environment (config, numbers, recipes)
+  New contents
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
