@@ -2,11 +2,13 @@ package com.CompactMekanismMachines.common;
 
 
 import com.CompactMekanismMachines.common.config.CompactMekanismMachinesConfig;
+import com.CompactMekanismMachines.common.network.CMMPacketHandler;
 import com.CompactMekanismMachines.common.registries.CompactBlocks;
 import com.CompactMekanismMachines.common.registries.CompactContainerTypes;
 import com.CompactMekanismMachines.common.registries.CompactCreativeTabs;
 import com.CompactMekanismMachines.common.registries.CompactTileEntityTypes;
 import com.mojang.logging.LogUtils;
+import mekanism.common.lib.Version;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
@@ -38,8 +40,15 @@ public class CompactMekanismMachines {
     // Create a Deferred Register to hold CreativeModeTabs which will all be registered under the "examplemod" namespace
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
 
+    // Using Mekanism's Packet pipeline so that this allows to use easier packet
+    public final Version version;
+
+    public static CompactMekanismMachines instance;
+    private final CMMPacketHandler handler;
 
     public CompactMekanismMachines() {
+        instance = this;
+
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         // Register the commonSetup method for modloading
@@ -58,6 +67,9 @@ public class CompactMekanismMachines {
 
         // Register our mod's ForgeConfigSpec so that Forge can create and load the config file for us
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.SPEC);
+
+        version = new Version(ModLoadingContext.get().getActiveContainer());
+        handler = new CMMPacketHandler();
     }
 
     public static ResourceLocation rl(String path) {
@@ -74,6 +86,11 @@ public class CompactMekanismMachines {
         LOGGER.info(Config.magicNumberIntroduction + Config.magicNumber);
 
         Config.items.forEach((item) -> LOGGER.info("ITEM >> {}", item.toString()));
+
+        handler.initialize();
     }
 
+    public static CMMPacketHandler getHandler() {
+        return instance.handler;
+    }
 }

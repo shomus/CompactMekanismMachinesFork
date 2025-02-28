@@ -154,6 +154,7 @@ public class TileEntityCompactIndustrialTurbine extends TileEntityConfigurableMa
                     rate = Math.min(rate, CompactMekanismMachinesConfig.machines.turbinevertualvents.get() * MekanismGeneratorsConfig.generators.turbineVentGasFlow.get());
                     double proportion = stored / (double) getSteamCapacity();
                     rate = Math.min(Math.min(stored, rate), energyNeeded.divide(energyMultiplier).doubleValue()) * proportion;
+                    rate = Math.min(rate, getMaxFlowRate());
                     clientFlow = MathUtils.clampToLong(rate);
                     if (clientFlow > 0) {
                         energyContainer.insert(energyMultiplier.multiply(rate), Action.EXECUTE, AutomationType.INTERNAL);

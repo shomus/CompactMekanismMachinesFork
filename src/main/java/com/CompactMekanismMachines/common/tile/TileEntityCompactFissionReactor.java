@@ -27,11 +27,13 @@ import mekanism.common.capabilities.holder.heat.HeatCapacitorHelper;
 import mekanism.common.capabilities.holder.heat.IHeatCapacitorHolder;
 import mekanism.common.integration.computer.SpecialComputerMethodWrapper;
 import mekanism.common.integration.computer.annotation.ComputerMethod;
+import mekanism.common.integration.computer.annotation.SyntheticComputerMethod;
 import mekanism.common.integration.computer.annotation.WrappingComputerMethod;
 import mekanism.common.inventory.container.MekanismContainer;
 import mekanism.common.inventory.container.sync.SyncableDouble;
 import mekanism.common.inventory.container.sync.SyncableFloatingLong;
 import mekanism.common.inventory.container.sync.SyncableInt;
+import mekanism.common.inventory.container.sync.dynamic.ContainerSync;
 import mekanism.common.inventory.slot.EnergyInventorySlot;
 import mekanism.common.inventory.slot.chemical.GasInventorySlot;
 import mekanism.common.lib.transmitter.TransmissionType;
@@ -51,6 +53,8 @@ import mekanism.generators.common.config.MekanismGeneratorsConfig;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.Mth;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.fluids.FluidStack;
@@ -61,7 +65,6 @@ import com.CompactMekanismMachines.common.config.CompactMekanismMachinesConfig;
 
 import java.util.EnumSet;
 import java.util.Set;
-import java.util.function.LongSupplier;
 
 public class TileEntityCompactFissionReactor extends TileEntityConfigurableMachine {
     /**
@@ -89,6 +92,10 @@ public class TileEntityCompactFissionReactor extends TileEntityConfigurableMachi
     GasInventorySlot fuelSlot;
     @WrappingComputerMethod(wrapper = SpecialComputerMethodWrapper.ComputerIInventorySlotWrapper.class, methodNames = "getEnergyItem", docPlaceholder = "energy item slot")
     EnergyInventorySlot energySlot;
+
+    @ContainerSync
+    @SyntheticComputerMethod(getter = "getRateLimit")
+    public long rateLimit = 1;
 
     public TileEntityCompactFissionReactor(BlockPos pos, BlockState state) {
         super(CompactBlocks.COMPACT_FISSION_REACTOR, pos, state);
@@ -142,6 +149,17 @@ public class TileEntityCompactFissionReactor extends TileEntityConfigurableMachi
         return builder.build();
     }
 
+    @Override
+    public void saveAdditional(@NotNull CompoundTag nbtTags) {
+        super.saveAdditional(nbtTags);
+        nbtTags.putLong("rate", rateLimit);
+    }
+
+    @Override
+    public void load(@NotNull CompoundTag nbt) {
+        super.load(nbt);
+        rateLimit = nbt.getLong("rate");
+    }
 
     @Override
     protected void onUpdateServer() {
@@ -159,12 +177,16 @@ public class TileEntityCompactFissionReactor extends TileEntityConfigurableMachi
             }
 
             long toUse = getToUse();
-            FloatingLong toUseGeneration = generationRate.multiply(toUse);
+            // Unused
+//            FloatingLong toUseGeneration = generationRate.multiply(toUse);
 
             long total = burnTicks + fuelTank.getStored() * maxBurnTicks;
             total -= toUse;
             if (!fuelTank.isEmpty()) {
-                //TODO: Improve this as it is sort of hacky
+                //TODO: Improve this as it is sort of hacky (implementing)
+                if (fuelTank.getStored() < this.rateLimit) {
+                    fuelTank.setStack(new GasStack(fuelTank.getStack(), total / maxBurnTicks));
+                }
                 fuelTank.setStack(new GasStack(fuelTank.getStack(), total / maxBurnTicks));
             }
 
@@ -226,7 +248,7 @@ public class TileEntityCompactFissionReactor extends TileEntityConfigurableMachi
         if (generationRate.isZero() || fuelTank.isEmpty()) {
             return 0;
         }
-        long max = (long) Math.ceil(CompactMekanismMachinesConfig.machines.cfrBurnRate.get() * (fuelTank.getStored() / (double) fuelTank.getCapacity()));
+        long max = rateLimit;
         max = Math.min(maxBurnTicks * fuelTank.getStored() + burnTicks, max);
         return max;
     }
@@ -270,6 +292,14 @@ public class TileEntityCompactFissionReactor extends TileEntityConfigurableMachi
         container.track(SyncableFloatingLong.create(this::getGenerationRate, value -> generationRate = value));
         container.track(SyncableDouble.create(this::getUsed, value -> gasUsedLastTick = value));
         container.track(SyncableInt.create(this::getMaxBurnTicks, value -> maxBurnTicks = value));
+    }
+
+    public void setRateLimit(long rate) {
+        rate = (long) Mth.clamp(rate, 0, CompactMekanismMachinesConfig.machines.cfrBurnRate.get());
+        if (rateLimit != rate) {
+            rateLimit = rate;
+            this.markForSave();
+        }
     }
 
     //Methods relating to IComputerTile
@@ -351,5 +381,4 @@ public class TileEntityCompactFissionReactor extends TileEntityConfigurableMachi
             super(CompactMekanismMachinesConfig.machines.cfrHeatTankCpacity.get(), () -> INVERSE_CONDUCTION_COEFFICIENT, () -> INVERSE_INSULATION_COEFFICIENT, () -> biomeAmbientTemp, null);
         }
     }
-
 }
